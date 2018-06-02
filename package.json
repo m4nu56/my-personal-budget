@@ -2,6 +2,7 @@
   "name": "budget-app",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "https://m4nu56.gitlab.io/react-test/",
   "dependencies": {
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
