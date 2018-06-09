@@ -24,10 +24,17 @@
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.49.3",
     "flow-bin": "^0.74.0",
+    "husky": "^1.0.0-rc.8",
     "jquery": "^3.3.1"
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run-script lint"
+    }
+  }
+
 }
