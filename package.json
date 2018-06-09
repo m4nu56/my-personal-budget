@@ -18,8 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "precommit": "pretty-quick --staged",
-    "pretty-quick": "pretty-quick && npm run-script lint"
+    "prettier": "prettier --write src/**/*{js,css,md}",
+    "pretty-quick": "pretty-quick"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -37,6 +37,7 @@
   ],
   "husky": {
     "hooks": {
+      "pre-commit": "pretty-quick --staged",
       "pre-push": "npm run-script lint"
     }
   }
