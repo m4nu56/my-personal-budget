@@ -1,12 +1,15 @@
 import React from "react";
 import LoginForm from "./../login/LoginForm";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BudgetList from "./../BudgetList";
+import 'jquery/dist/jquery.min';
+import 'popper.js/dist/popper';
+import 'bootstrap/dist/js/bootstrap.min';
 import Footer from "./../footer/Footer";
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import About from "./../About";
 import './home.css';
 import Header from "../header/Header";
+import Budget from "../budget/Budget";
 
 
 export default class Home extends React.Component {
@@ -46,7 +49,7 @@ export default class Home extends React.Component {
                         <div className="container">
                             <div className="row align-items-center">
                                 <div className="col">
-                                    <Route exact path="/" component={BudgetList}/>
+                                    <Route exact path="/" component={Budget}/>
                                     <Route path="/about" component={About}/>
                                 </div>
                             </div>

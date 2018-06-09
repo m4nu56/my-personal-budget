@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://m4nu56.gitlab.io/react-test/",
   "dependencies": {
+    "popper.js": "^1.14.3",
     "bootstrap": "^4.1.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
@@ -15,5 +16,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "jquery": "^3.3.1"
   }
 }
