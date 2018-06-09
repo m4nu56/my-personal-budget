@@ -1,7 +1,15 @@
+// @flow
+
 import React from "react";
 import Square from "./Square";
 
-export default class Board extends React.Component {
+type Props = {
+    squares: Array,
+    onClick: Function,
+    status: string
+};
+
+export default class Board extends React.Component<Props> {
     renderSquare(i) {
         return (
             <Square

@@ -1,6 +1,13 @@
+// @flow
+
 import React from "react";
 
-function Square(props) {
+type Props = {
+    onClick: Function,
+    value: string
+};
+
+function Square(props: Props) {
     return (
         <button className="square" onClick={props.onClick}>
             {props.value}

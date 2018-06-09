@@ -1,6 +1,14 @@
-import React from "react";
+// @flow
 
-export default class BudgetList extends React.Component {
+import * as React from 'react';
+
+type Props = {
+    lstMouvement: Array
+};
+
+
+export default class BudgetList extends React.Component<Props> {
+
     constructor(props) {
         super(props);
         this.state = {};
@@ -8,7 +16,8 @@ export default class BudgetList extends React.Component {
 
     render() {
 
-        const mouvementRows = this.props.lstMouvement.map((mouvement) => {
+        const lstMouvement = this.props.lstMouvement;
+        const mouvementRows = lstMouvement.map((mouvement) => {
             return (
                 <tr key={mouvement.id}>
                     <td>{mouvement.id}</td>

@@ -1,7 +1,13 @@
+// @flow
+
 import React from "react";
 import './loginform.css';
 
-export default class LoginForm extends React.Component {
+type Props = {
+    onSubmit: Function
+};
+
+export default class LoginForm extends React.Component<Props> {
 
     constructor(props) {
         super(props);
@@ -44,8 +50,7 @@ export default class LoginForm extends React.Component {
                         value={this.state.email}
                         onChange={this.handleInputChange}
                     />
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.
-                    </small>
+                    <small id="emailHelp" className="form-text text-muted">We&apos;ll never share your email with anyone else.</small>
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"

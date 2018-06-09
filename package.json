@@ -12,12 +12,22 @@
     "react-scripts": "1.1.4"
   },
   "scripts": {
+    "flow": "flow",
+    "lint": "eslint ./src --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-flowtype": "^2.49.3",
+    "flow-bin": "^0.74.0",
     "jquery": "^3.3.1"
-  }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ]
 }

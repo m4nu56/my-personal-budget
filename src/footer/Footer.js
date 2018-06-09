@@ -1,7 +1,14 @@
-import React from "react";
+// @flow
+
+import * as React from 'react';
 import './footer.css';
 
-export default function Footer(props) {
+type Props = {
+    handleLogout: Function,
+};
+
+
+export default function Footer(props: Props) {
     return (
         <footer className="footer">
             <div className="container">
