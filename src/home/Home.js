@@ -2,7 +2,7 @@ import React from 'react';
 import LoginForm from './../login/LoginForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min';
-import 'popper.js/dist/popper';
+import 'popper.js/dist/umd/popper';
 import 'bootstrap/dist/js/bootstrap.min';
 import Footer from './../footer/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
