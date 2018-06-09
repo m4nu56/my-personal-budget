@@ -40,7 +40,7 @@ export default class LoginForm extends React.Component {
                         placeholder="Enter email"
                         name="email"
                         required
-                        autofocus
+                        autoFocus
                         value={this.state.email}
                         onChange={this.handleInputChange}
                     />

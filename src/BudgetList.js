@@ -10,13 +10,13 @@ export default class BudgetList extends React.Component {
 
         const lstMouvement = [
             {id: 1, date: new Date(), montant: 123.22, libelle: 'achat bidule'},
-            {id: 1, date: new Date(), montant: 123.22, libelle: 'achat bidule'},
-            {id: 1, date: new Date(), montant: 123.22, libelle: 'achat bidule'},
-            {id: 1, date: new Date(), montant: 123.22, libelle: 'achat bidule'},
+            {id: 2, date: new Date(), montant: 123.22, libelle: 'achat bidule'},
+            {id: 3, date: new Date(), montant: 123.22, libelle: 'achat bidule'},
+            {id: 4, date: new Date(), montant: 123.22, libelle: 'achat bidule'},
         ];
         const mouvementRows = lstMouvement.map((mouvement) => {
             return (
-                <tr>
+                <tr key={mouvement.id}>
                     <td>{mouvement.id}</td>
                     <td>{mouvement.date.toDateString()}</td>
                     <td>{mouvement.montant}</td>

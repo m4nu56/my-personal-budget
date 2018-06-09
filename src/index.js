@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from "./Login";
+import Home from "./home/Home";
 
 // ========================================
 
 ReactDOM.render(
-    <Login/>,
+    <Home/>,
     document.getElementById('root')
 );
 
