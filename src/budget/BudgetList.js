@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 type Props = {
-    lstMouvement2: Array
+    lstMouvement: Array
 };
 
 
