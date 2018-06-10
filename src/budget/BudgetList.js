@@ -18,7 +18,7 @@ export default class BudgetList extends React.Component<Props> {
             return (
                 <tr key={mouvement.id}>
                     <td>{mouvement.id}</td>
-                    <td>{mouvement.date.toDateString()}</td>
+                    <td>{mouvement.date}</td>
                     <td>{mouvement.montant}</td>
                     <td>{mouvement.libelle}</td>
                 </tr>
