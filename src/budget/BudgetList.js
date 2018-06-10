@@ -20,18 +20,20 @@ export default class BudgetList extends React.Component<Props> {
                     <td>{mouvement.id}</td>
                     <td>{mouvement.date}</td>
                     <td>{mouvement.montant}</td>
+                    <td>{mouvement.categorie}</td>
                     <td>{mouvement.libelle}</td>
                 </tr>
             );
         });
 
         return (
-            <table className="table table-sm table-dark">
+            <table className="table table-sm table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Date</th>
                         <th scope="col">Montant</th>
+                        <th scope="col">Catégorie</th>
                         <th scope="col">Libelle</th>
                     </tr>
                 </thead>

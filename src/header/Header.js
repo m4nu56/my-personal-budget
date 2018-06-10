@@ -2,13 +2,20 @@ import React from 'react';
 import './header.css';
 import { Link } from 'react-router-dom';
 
-export default function Header(props) {
+export default function Header() {
     return (
         <div>
-            <nav className="site-header sticky-top py-1">
-                <div className="container d-flex flex-column flex-md-row justify-content-between">
-                    <Link to="/">Home</Link>
-                    <Link to="/about">About</Link>
+            <nav className="navbar navbar-default">
+                <div className="navbar-header">
+                    <Link to="/" className="navbar-brand">
+                        Home
+                    </Link>
+                    <ul className="nav navbar-nav">
+                        <li>
+                            {' '}
+                            <Link to="/about">About</Link>
+                        </li>
+                    </ul>
                 </div>
             </nav>
         </div>
