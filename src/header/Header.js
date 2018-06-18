@@ -7,7 +7,7 @@ export default function Header() {
         <div>
             <nav className="navbar navbar-default">
                 <div className="navbar-header">
-                    <Link to="/" className="navbar-brand">
+                    <Link to="/mouvement" className="navbar-brand">
                         Home
                     </Link>
                     <ul className="nav navbar-nav">
