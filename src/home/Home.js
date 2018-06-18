@@ -1,12 +1,12 @@
-import React from 'react'
-import LoginForm from './../login/LoginForm'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import Footer from './../footer/Footer'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import About from './../About'
-import './home.css'
-import Header from '../header/Header'
-import Budget from '../budget/Budget'
+import React from 'react';
+import LoginForm from './../login/LoginForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from './../footer/Footer';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import About from './../About';
+import './home.css';
+import Header from '../header/Header';
+import Budget from '../budget/Budget';
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -43,7 +43,7 @@ export default class Home extends React.Component {
                         <div className="container" style={{ marginTop: '30px' }}>
                             <div className="row align-items-center">
                                 <div className="col">
-                                    <Route path="/mouvement" component={Budget}/>
+                                    <Route path="/mouvement" component={Budget} />
                                     <Route path="/about" component={About} />
                                 </div>
                             </div>

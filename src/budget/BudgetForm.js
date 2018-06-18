@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react'
-import { Button } from 'react-bootstrap'
+import React from 'react';
+import { Button } from 'react-bootstrap';
 
 type PropsBudgetForm = {
     onSubmit: Function,
@@ -18,21 +18,21 @@ type StateBudgetForm = {
 };
 
 export default class BudgetForm extends React.Component<PropsBudgetForm, StateBudgetForm> {
-    constructor (props) {
-        super(props)
+    constructor(props) {
+        super(props);
 
-        console.log('constructor budgetform match=')
-        console.log(props.mouvement)
+        console.log('constructor budgetform match=');
+        console.log(props.mouvement);
 
         let mouvement = {
             id: 0,
             date: '10/01/2018',
             montant: '0110',
             libelle: '',
-            categorie: '1',
-        }
+            categorie: '1'
+        };
         if (this.props.mouvement != null) {
-            mouvement = this.props.mouvement
+            mouvement = this.props.mouvement;
         }
 
         this.state = {
@@ -40,50 +40,49 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
             date: mouvement.date,
             montant: mouvement.montant,
             libelle: mouvement.libelle,
-            categorie: mouvement.categorie,
-        }
+            categorie: mouvement.categorie
+        };
 
-        this.handleInputChange = this.handleInputChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleInputChange (event) {
-        const target = event.target
-        const value = target.type === 'checkbox' ? target.checked : target.value
-        const name = target.name
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
 
         this.setState({
-            [name]: value,
-        })
+            [name]: value
+        });
 
-        console.log(value)
+        console.log(value);
     }
 
-    handleSubmit (event) {
-        event.preventDefault()
+    handleSubmit(event) {
+        event.preventDefault();
         let mouvement = {
             id: this.state.id,
             date: this.state.date,
             montant: this.state.montant,
             libelle: this.state.libelle,
-            categorie: this.state.categorie,
-        }
-        console.log(mouvement)
+            categorie: this.state.categorie
+        };
+        console.log(mouvement);
         if (mouvement.id === 0) {
-            mouvement.id = Math.floor(Math.random() * 1000) + 1
+            mouvement.id = Math.floor(Math.random() * 1000) + 1;
         }
-        this.props.onSubmit(mouvement)
+        this.props.onSubmit(mouvement);
         this.setState({
             id: 0,
             date: '',
             montant: '',
             libelle: '',
-            categorie: '',
-        })
+            categorie: ''
+        });
     }
 
-    render () {
-
+    render() {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -135,7 +134,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
                             value={this.state.categorie}
                             onChange={this.handleInputChange}
                         >
-                            <option/>
+                            <option />
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -150,6 +149,6 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
                     </Button>
                 </form>
             </div>
-        )
+        );
     }
 }
