@@ -3,7 +3,7 @@
 # Budget with React
 
 Une app de gestion du budget. Front en React.
-[Budget App](https://m4nu56.gitlab.io/)
+[Budget App](https://m4nu56.gitlab.io/react-test/)
 
 ## Git Hooks
 
@@ -15,7 +15,7 @@ pre-commit: prettier && lint
 
 Merge request sur master déploient une version sur gitlab pages
 
-[Gitlab Pages](https://m4nu56.gitlab.io/)
+[Gitlab Pages](https://m4nu56.gitlab.io/react-test/)
 
 ## Built With
 
