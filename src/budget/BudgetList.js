@@ -1,20 +1,20 @@
 // @flow
 
-import * as React from 'react';
+import * as React from 'react'
 
 type PropsBudgetList = {
     lstMouvement: Array,
-    onEdit: Function
+    onEdit: Function,
 };
 
 export default class BudgetList extends React.Component<PropsBudgetList> {
-    constructor(props) {
-        super(props);
-        this.state = {};
+    constructor (props) {
+        super(props)
+        this.state = {}
     }
 
-    render() {
-        const lstMouvement = this.props.lstMouvement;
+    render () {
+        const lstMouvement = this.props.lstMouvement
         const mouvementRows = lstMouvement.map(mouvement => {
             return (
                 <tr key={mouvement.id}>
@@ -24,29 +24,27 @@ export default class BudgetList extends React.Component<PropsBudgetList> {
                     <td>{mouvement.categorie}</td>
                     <td>{mouvement.libelle}</td>
                     <td>
-                        <button className="btn btn-small" onClick={() => this.props.onEdit(mouvement)}>
-                            <i className="glyphicon glyphicon-edit" />
-                        </button>
-                        <i className="glyphicon glyphicon-minus" />
+                        <button className="btn btn-small" onClick={() => this.props.onEdit(mouvement)}><i className="glyphicon glyphicon-edit"/></button>
+                        <i className="glyphicon glyphicon-minus"/>
                     </td>
                 </tr>
-            );
-        });
+            )
+        })
 
         return (
             <table className="table table-sm table-striped">
                 <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Montant</th>
-                        <th scope="col">Catégorie</th>
-                        <th scope="col">Libelle</th>
-                        <th>#</th>
-                    </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Catégorie</th>
+                    <th scope="col">Libelle</th>
+                    <th>#</th>
+                </tr>
                 </thead>
                 <tbody>{mouvementRows}</tbody>
             </table>
-        );
+        )
     }
 }
