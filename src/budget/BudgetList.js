@@ -2,11 +2,12 @@
 
 import * as React from 'react';
 
-type Props = {
-    lstMouvement: Array
+type PropsBudgetList = {
+    lstMouvement: Array,
+    onEdit: Function
 };
 
-export default class BudgetList extends React.Component<Props> {
+export default class BudgetList extends React.Component<PropsBudgetList> {
     constructor(props) {
         super(props);
         this.state = {};
@@ -20,19 +21,28 @@ export default class BudgetList extends React.Component<Props> {
                     <td>{mouvement.id}</td>
                     <td>{mouvement.date}</td>
                     <td>{mouvement.montant}</td>
+                    <td>{mouvement.categorie}</td>
                     <td>{mouvement.libelle}</td>
+                    <td>
+                        <button className="btn btn-small" onClick={() => this.props.onEdit(mouvement)}>
+                            <i className="glyphicon glyphicon-edit" />
+                        </button>
+                        <i className="glyphicon glyphicon-minus" />
+                    </td>
                 </tr>
             );
         });
 
         return (
-            <table className="table table-sm table-dark">
+            <table className="table table-sm table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Date</th>
                         <th scope="col">Montant</th>
+                        <th scope="col">Catégorie</th>
                         <th scope="col">Libelle</th>
+                        <th>#</th>
                     </tr>
                 </thead>
                 <tbody>{mouvementRows}</tbody>

@@ -40,10 +40,10 @@ export default class Home extends React.Component {
                     <div>
                         <Header />
 
-                        <div className="container">
+                        <div className="container" style={{ marginTop: '30px' }}>
                             <div className="row align-items-center">
                                 <div className="col">
-                                    <Route exact path="/" component={Budget} />
+                                    <Route path="/mouvement" component={Budget} />
                                     <Route path="/about" component={About} />
                                 </div>
                             </div>
