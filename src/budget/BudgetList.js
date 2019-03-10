@@ -4,7 +4,8 @@ import * as React from 'react';
 
 type PropsBudgetList = {
     lstMouvement: Array,
-    onEdit: Function
+    onEdit: Function,
+    onDelete: Function
 };
 
 export default class BudgetList extends React.Component<PropsBudgetList> {
@@ -15,9 +16,9 @@ export default class BudgetList extends React.Component<PropsBudgetList> {
 
     render() {
         const lstMouvement = this.props.lstMouvement;
-        const mouvementRows = lstMouvement.map(mouvement => {
+        const mouvementRows = lstMouvement.map((mouvement, index) => {
             return (
-                <tr key={mouvement.id}>
+                <tr key={index}>
                     <td>{mouvement.id}</td>
                     <td>{mouvement.date}</td>
                     <td>{mouvement.montant}</td>
@@ -27,7 +28,9 @@ export default class BudgetList extends React.Component<PropsBudgetList> {
                         <button className="btn btn-small" onClick={() => this.props.onEdit(mouvement)}>
                             <i className="glyphicon glyphicon-edit" />
                         </button>
-                        <i className="glyphicon glyphicon-minus" />
+                        <button className="btn btn-small" onClick={() => this.props.onDelete(mouvement)}>
+                            <i className="glyphicon glyphicon-minus" />
+                        </button>
                     </td>
                 </tr>
             );

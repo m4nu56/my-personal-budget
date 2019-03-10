@@ -13,6 +13,10 @@ export default function Header() {
                     <ul className="nav navbar-nav">
                         <li>
                             {' '}
+                            <Link to="/mouvement/import">Import</Link>
+                        </li>
+                        <li>
+                            {' '}
                             <Link to="/about">About</Link>
                         </li>
                     </ul>

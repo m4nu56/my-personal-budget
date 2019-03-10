@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import InputCategorie from './InputCategorie';
 
 type PropsBudgetForm = {
     onSubmit: Function,
@@ -21,11 +22,8 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
     constructor(props) {
         super(props);
 
-        console.log('constructor budgetform match=');
-        console.log(props.mouvement);
-
         let mouvement = {
-            id: 0,
+            id: null,
             date: '10/01/2018',
             montant: '0110',
             libelle: '',
@@ -55,26 +53,20 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
         this.setState({
             [name]: value
         });
-
-        console.log(value);
     }
 
     handleSubmit(event) {
         event.preventDefault();
         let mouvement = {
-            id: this.state.id,
+            id: this.state.id !== undefined ? this.state.id : null,
             date: this.state.date,
             montant: this.state.montant,
             libelle: this.state.libelle,
             categorie: this.state.categorie
         };
-        console.log(mouvement);
-        if (mouvement.id === 0) {
-            mouvement.id = Math.floor(Math.random() * 1000) + 1;
-        }
         this.props.onSubmit(mouvement);
         this.setState({
-            id: 0,
+            id: null,
             date: '',
             montant: '',
             libelle: '',
@@ -124,24 +116,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
                             onChange={this.handleInputChange}
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="categorie">Catégorie</label>
-                        <select
-                            className="form-control"
-                            id="categorie"
-                            name="categorie"
-                            required
-                            value={this.state.categorie}
-                            onChange={this.handleInputChange}
-                        >
-                            <option />
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
+                    <InputCategorie categorie={this.state.categorie} handleInputChange={this.handleInputChange} />
 
                     <Button onClick={this.props.onHide}>Cancel</Button>
                     <Button bsStyle="primary" type="submit">

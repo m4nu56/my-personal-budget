@@ -1,53 +1,44 @@
 import BudgetList from './BudgetList';
 import React from 'react';
 import BudgetForm from './BudgetForm';
+import fire from '../fire';
+import { Link } from 'react-router-dom';
 
 export default class Budget extends React.Component {
     constructor(props) {
         super(props);
 
-        const lstMouvement = [
-            { id: 1, date: '10/04/2018', montant: 123.22, libelle: 'medecin', categorie: 1 },
-            { id: 2, date: '11/05/2019', montant: 2123.22, libelle: 'pharmacie', categorie: 2 },
-            { id: 3, date: '12/06/2020', montant: 3123.22, libelle: 'supermarché', categorie: 3 },
-            { id: 4, date: '13/07/2021', montant: 4123.22, libelle: 'restaurant', categorie: 5 }
-        ];
-
         this.state = {
-            lstMouvement: lstMouvement,
             mouvementEdited: null
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleHide = this.handleHide.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
-    handleSubmit(mouvement) {
-        console.log(mouvement);
-
-        let newLstMouvement = this.state.lstMouvement.slice();
-        // si on est en create on insert le nouvement mouvement
-        if (this.state.mouvementEdited === null) {
-            newLstMouvement.push(mouvement);
+    handleSubmit = mouvement => {
+        if (mouvement.id) {
+            fire.database()
+                .ref('mouvements/')
+                .child(mouvement.id)
+                .set(mouvement);
         } else {
-            // sinon on remplace le mouvement modifié dans la liste
-            newLstMouvement = newLstMouvement.map(mvt => {
-                // console.log(mvt)
-                if (mvt.id === mouvement.id) {
-                    console.log(mouvement.id);
-                    return mouvement;
-                } else {
-                    return mvt;
-                }
-            });
+            fire.database()
+                .ref('mouvements/')
+                .push(mouvement);
         }
-
         this.setState({
-            lstMouvement: newLstMouvement,
             mouvementEdited: null
         });
-    }
+    };
+    handleDelete = mouvement => {
+        fire.database()
+            .ref('mouvements/')
+            .child(mouvement.id)
+            .remove();
+    };
 
     handleHide() {
         this.setState({
@@ -56,15 +47,16 @@ export default class Budget extends React.Component {
     }
 
     handleEdit(mouvement) {
-        console.log('handleEdit=');
-        console.log(mouvement);
         this.setState({
             mouvementEdited: mouvement
         });
     }
 
     render() {
-        let content = <BudgetList lstMouvement={this.state.lstMouvement} onEdit={this.handleEdit} />;
+        let content = (
+            <BudgetList lstMouvement={this.props.lstMouvement} onEdit={this.handleEdit} onDelete={this.handleDelete} />
+        );
+
         if (this.state.mouvementEdited != null) {
             content = (
                 <BudgetForm
@@ -77,12 +69,52 @@ export default class Budget extends React.Component {
 
         return (
             <div className="text-center">
-                <button className="btn btn-sm btn-primary m-2" onClick={() => this.setState({ showModal: true })}>
+                <button
+                    className="btn btn-sm btn-primary m-2"
+                    onClick={() =>
+                        this.handleSubmit({
+                            date:
+                                Math.floor(Math.random() * 30) +
+                                1 +
+                                '/' +
+                                (Math.floor(Math.random() * 11) + 1) +
+                                '/2019',
+                            libelle: Math.random()
+                                .toString(36)
+                                .substring(7),
+                            categorie: Math.random()
+                                .toString(36)
+                                .substring(7),
+                            montant: Math.floor((Math.random() * 450 + 55) * 100) / 100
+                        })
+                    }
+                >
+                    <i className="glyphicon glyphicon-plus" /> Ajouter un mouvement 222
+                </button>
+                <button
+                    className="btn btn-sm btn-primary m-2"
+                    onClick={() => this.setState({ mouvementEdited: { date: '01/01/2019' } })}
+                >
                     <i className="glyphicon glyphicon-plus" /> Ajouter un mouvement
                 </button>
+                <button
+                    className="btn btn-sm btn-primary m-2"
+                    onClick={() => this.props.lstMouvement.forEach(m => this.handleDelete(m))}
+                >
+                    <i className="glyphicon glyphicon-minus" /> Supprimer tous
+                </button>
+                <Link to="/mouvement/import" className="navbar-brand">
+                    <button className="btn btn-sm btn-primary m-2">
+                        <i className="glyphicon glyphicon-plus" /> Import
+                    </button>
+                </Link>
 
                 {content}
             </div>
         );
     }
 }
+
+Budget.propTypes = {
+    lstMouvement: PropTypes.array
+};

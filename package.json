@@ -5,6 +5,9 @@
     "homepage": "https://m4nu56.gitlab.io/react-test/",
     "dependencies": {
         "bootstrap": "^3.3.7",
+        "firebase": "^5.8.6",
+        "moment": "^2.24.0",
+        "parse-decimal-number": "^1.0.0",
         "react": "^16.4.0",
         "react-bootstrap": "^0.32.1",
         "react-dom": "^16.4.0",
