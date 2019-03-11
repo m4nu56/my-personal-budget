@@ -3,6 +3,7 @@ import React from 'react';
 import BudgetForm from './BudgetForm';
 import fire from '../fire';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default class Budget extends React.Component {
     constructor(props) {
