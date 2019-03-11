@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { categories, checkerCategorie } from './Categories';
+import { checkerCategorie } from './Categories';
 import moment from 'moment';
 import parseDecimalNumber from 'parse-decimal-number';
 import CONSTANTS from '../Constants';
 import fire from '../fire';
 import './budget.css';
-import { Redirect } from 'react-router-dom';
 
 type PropsBudgetImport = {
     onSubmit: Function,

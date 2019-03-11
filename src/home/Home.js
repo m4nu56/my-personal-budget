@@ -1,7 +1,6 @@
 import React from 'react';
 import LoginForm from './../login/LoginForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Footer from './../footer/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import About from './../About';
 import './home.css';
