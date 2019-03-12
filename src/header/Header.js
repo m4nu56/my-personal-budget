@@ -7,16 +7,19 @@ export default function Header() {
         <div>
             <nav className="navbar navbar-default">
                 <div className="navbar-header">
-                    <Link to="/mouvement" className="navbar-brand">
-                        Home
-                    </Link>
                     <ul className="nav navbar-nav">
                         <li>
-                            {' '}
+                            <Link to="/mouvement" className="navbar-brand">
+                                Home
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/mouvement/import">Import</Link>
                         </li>
                         <li>
-                            {' '}
+                            <Link to="/devextreme">DevExtreme</Link>
+                        </li>
+                        <li>
                             <Link to="/about">About</Link>
                         </li>
                     </ul>

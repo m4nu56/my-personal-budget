@@ -5,6 +5,8 @@
     "homepage": "https://m4nu56.gitlab.io/react-test/",
     "dependencies": {
         "bootstrap": "^3.3.7",
+        "devextreme": "^18.2.6",
+        "devextreme-react": "^18.2.6",
         "enzyme": "^3.9.0",
         "enzyme-adapter-react-16": "^1.10.0",
         "firebase": "^5.8.6",

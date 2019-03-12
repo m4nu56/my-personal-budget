@@ -2,18 +2,19 @@
 
 import React from 'react';
 import {Button} from 'react-bootstrap';
-import {findCategoryByLibelle} from './Categories';
+import {findCategoryByLibelle} from '../Categories';
 import moment from 'moment';
 import parseDecimalNumber from 'parse-decimal-number';
-import CONSTANTS from '../Constants';
-import fire from '../fire';
+import CONSTANTS from '../../Constants';
+import fire from '../../fire';
 import './budget.css';
 
 type PropsBudgetImport = {
     onSubmit: Function,
     lstMouvement: Array,
     history: any,
-    onHide: Function
+    onHide: Function,
+    match: any
 };
 
 type StateBudgetImport = {};

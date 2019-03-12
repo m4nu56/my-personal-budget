@@ -2,12 +2,15 @@
 
 import React from 'react';
 import {Button} from 'react-bootstrap';
-import InputCategorie from './InputCategorie';
+import InputCategorie from '../InputCategorie';
+import fire from '../../fire';
+import moment from 'moment';
 
 type PropsBudgetForm = {
     onSubmit: Function,
     onHide: Function,
-    mouvement: any
+    mouvement: any,
+    match: any
 };
 
 type StateBudgetForm = {
@@ -22,27 +25,35 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
     constructor(props) {
         super(props);
 
-        let mouvement = {
-            id: null,
-            date: '10/01/2018',
-            montant: '0110',
-            libelle: '',
-            categorie: '1'
-        };
-        if (this.props.mouvement != null) {
-            mouvement = this.props.mouvement;
-        }
-
         this.state = {
-            id: mouvement.id,
-            date: mouvement.date,
-            montant: mouvement.montant,
-            libelle: mouvement.libelle,
-            categorie: mouvement.categorie
+            id: props.match.params.id,
+            date: moment().format('DD/MM/YYYY'),
+            montant: 0.0,
+            libelle: '',
+            categorie: ''
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentWillMount() {
+        const idMouvement = this.props.match.params.id;
+        let mouvementRef = fire
+            .database()
+            .ref('mouvements')
+            .child(idMouvement);
+
+        mouvementRef.on('value', snapshot => {
+            const mouvement = snapshot.val();
+            this.setState({
+                id: idMouvement,
+                date: mouvement.date,
+                montant: mouvement.montant,
+                libelle: mouvement.libelle,
+                categorie: mouvement.categorie
+            });
+        });
     }
 
     handleInputChange(event) {

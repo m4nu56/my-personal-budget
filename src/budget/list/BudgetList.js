@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from 'react';
+import {Link} from 'react-router-dom';
 
 type PropsBudgetList = {
     lstMouvement: Array,
@@ -25,9 +26,11 @@ export default class BudgetList extends React.Component<PropsBudgetList> {
                     <td>{mouvement.categorie}</td>
                     <td>{mouvement.libelle}</td>
                     <td>
-                        <button className="btn btn-small" onClick={() => this.props.onEdit(mouvement)}>
-                            <i className="glyphicon glyphicon-edit" />
-                        </button>
+                        <Link to={`/mouvement/${mouvement.id}`}>
+                            <button className="btn btn-small">
+                                <i className="glyphicon glyphicon-edit" />
+                            </button>
+                        </Link>
                         <button className="btn btn-small" onClick={() => this.props.onDelete(mouvement)}>
                             <i className="glyphicon glyphicon-minus" />
                         </button>
