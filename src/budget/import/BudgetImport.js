@@ -8,6 +8,7 @@ import parseDecimalNumber from 'parse-decimal-number';
 import CONSTANTS from '../../Constants';
 import fire from '../../fire';
 import './budget.css';
+import DataGrid, {Column, FilterRow, Grouping, GroupPanel, Pager, Paging, Selection} from 'devextreme-react/data-grid';
 
 type PropsBudgetImport = {
     onSubmit: Function,
@@ -24,7 +25,8 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
         super(props);
         console.log('props', props);
         this.state = {
-            import: '',
+            import:
+                '05-03-2019	Prêt 1% Patronal	PRLV SEPA ALS ACTION LOGEMENT SERVICES ECH/050319 ID EMETTEUR/FR30ZZZ822E81 MDT/PER00200003246 REF/000012928571LOANSN LIB/000012928571LOANSN	-70,67 €',
             mouvementLst: []
         };
 
@@ -101,34 +103,6 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
     }
 
     render() {
-        let tblMouvement = '';
-        if (this.state.mouvementLst.length > 0) {
-            const mouvementRows = this.state.mouvementLst.map((mouvement, index) => {
-                return (
-                    <tr key={index} className={mouvement.duplicated ? 'duplicated' : ''}>
-                        <td>{mouvement.date}</td>
-                        <td>{mouvement.montant}</td>
-                        <td>{mouvement.categorie}</td>
-                        <td>{mouvement.libelle}</td>
-                    </tr>
-                );
-            });
-
-            tblMouvement = (
-                <table className="table table-sm table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Montant</th>
-                            <th scope="col">Catégorie</th>
-                            <th scope="col">Libelle</th>
-                        </tr>
-                    </thead>
-                    <tbody>{mouvementRows}</tbody>
-                </table>
-            );
-        }
-
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -145,7 +119,20 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
                         />
                     </div>
 
-                    {tblMouvement}
+                    <DataGrid dataSource={this.state.mouvementLst} allowColumnReordering={true}>
+                        <GroupPanel visible={true} />
+                        <Grouping autoExpandAll={true} />
+                        <FilterRow visible={true} />
+                        <Selection mode={'multiple'} />
+
+                        <Column dataField={'date'} dataType={'date'} width={150} />
+                        <Column dataField={'libelle'} sortOrder={'asc'} />
+                        <Column dataField={'categorie'} />
+                        <Column dataField={'montant'} format={'currency'} width={100} />
+
+                        <Pager allowedPageSizes={[5, 10, 20]} showPageSizeSelector={true} />
+                        <Paging defaultPageSize={10} />
+                    </DataGrid>
 
                     <Button onClick={this.props.onHide}>Cancel</Button>
                     <Button bsStyle="primary" type="submit">
