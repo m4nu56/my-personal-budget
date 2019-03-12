@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import InputCategorie from './InputCategorie';
 
 type PropsBudgetForm = {
@@ -107,14 +107,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
                     </div>
                     <div className="form-group">
                         <label htmlFor="libelle">Libellé</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="libelle"
-                            name="libelle"
-                            value={this.state.libelle}
-                            onChange={this.handleInputChange}
-                        />
+                        <input type="text" className="form-control" id="libelle" name="libelle" value={this.state.libelle} onChange={this.handleInputChange} />
                     </div>
                     <InputCategorie categorie={this.state.categorie} handleInputChange={this.handleInputChange} />
 

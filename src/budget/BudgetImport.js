@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import { checkerCategorie } from './Categories';
+import {Button} from 'react-bootstrap';
+import {findCategoryByLibelle} from './Categories';
 import moment from 'moment';
 import parseDecimalNumber from 'parse-decimal-number';
 import CONSTANTS from '../Constants';
@@ -40,7 +40,7 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
                 let mouvementLst = [];
                 this.state.import.split('\n').forEach(row => {
                     let colRow = row.split('\t');
-                    let categorie = checkerCategorie(colRow[2]);
+                    let categorie = findCategoryByLibelle(colRow[2]);
 
                     let montant = 0.0;
                     if (colRow[3]) {
@@ -65,11 +65,7 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
 
                     // On test si le mouvement n'est pas déjà présent dans la liste
                     this.props.lstMouvement.forEach(m => {
-                        if (
-                            m.date === mouvement.date &&
-                            m.montant === mouvement.montant &&
-                            m.libelle === mouvement.libelle
-                        ) {
+                        if (m.date === mouvement.date && m.montant === mouvement.montant && m.libelle === mouvement.libelle) {
                             mouvement.duplicated = true;
                         }
                     });

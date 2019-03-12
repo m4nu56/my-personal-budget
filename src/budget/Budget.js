@@ -2,7 +2,7 @@ import BudgetList from './BudgetList';
 import React from 'react';
 import BudgetForm from './BudgetForm';
 import fire from '../fire';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default class Budget extends React.Component {
@@ -54,18 +54,10 @@ export default class Budget extends React.Component {
     }
 
     render() {
-        let content = (
-            <BudgetList lstMouvement={this.props.lstMouvement} onEdit={this.handleEdit} onDelete={this.handleDelete} />
-        );
+        let content = <BudgetList lstMouvement={this.props.lstMouvement} onEdit={this.handleEdit} onDelete={this.handleDelete} />;
 
         if (this.state.mouvementEdited != null) {
-            content = (
-                <BudgetForm
-                    onSubmit={this.handleSubmit}
-                    onHide={this.handleHide}
-                    mouvement={this.state.mouvementEdited}
-                />
-            );
+            content = <BudgetForm onSubmit={this.handleSubmit} onHide={this.handleHide} mouvement={this.state.mouvementEdited} />;
         }
 
         return (
@@ -74,12 +66,7 @@ export default class Budget extends React.Component {
                     className="btn btn-sm btn-primary m-2"
                     onClick={() =>
                         this.handleSubmit({
-                            date:
-                                Math.floor(Math.random() * 30) +
-                                1 +
-                                '/' +
-                                (Math.floor(Math.random() * 11) + 1) +
-                                '/2019',
+                            date: Math.floor(Math.random() * 30) + 1 + '/' + (Math.floor(Math.random() * 11) + 1) + '/2019',
                             libelle: Math.random()
                                 .toString(36)
                                 .substring(7),
@@ -92,16 +79,10 @@ export default class Budget extends React.Component {
                 >
                     <i className="glyphicon glyphicon-plus" /> Ajouter un mouvement 222
                 </button>
-                <button
-                    className="btn btn-sm btn-primary m-2"
-                    onClick={() => this.setState({ mouvementEdited: { date: '01/01/2019' } })}
-                >
+                <button className="btn btn-sm btn-primary m-2" onClick={() => this.setState({mouvementEdited: {date: '01/01/2019'}})}>
                     <i className="glyphicon glyphicon-plus" /> Ajouter un mouvement
                 </button>
-                <button
-                    className="btn btn-sm btn-primary m-2"
-                    onClick={() => this.props.lstMouvement.forEach(m => this.handleDelete(m))}
-                >
+                <button className="btn btn-sm btn-primary m-2" onClick={() => this.props.lstMouvement.forEach(m => this.handleDelete(m))}>
                     <i className="glyphicon glyphicon-minus" /> Supprimer tous
                 </button>
                 <Link to="/mouvement/import" className="navbar-brand">

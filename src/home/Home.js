@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from './../login/LoginForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import About from './../About';
 import './home.css';
 import Header from '../header/Header';
@@ -79,22 +79,14 @@ export default class Home extends React.Component {
                     <div>
                         <Header />
 
-                        <div className="container" style={{ marginTop: '30px' }}>
+                        <div className="container" style={{marginTop: '30px'}}>
                             <div className="row align-items-center">
                                 <div className="col">
-                                    <Route
-                                        path="/mouvement"
-                                        exact={true}
-                                        render={props => <Budget {...props} lstMouvement={this.state.lstMouvement} />}
-                                    />
+                                    <Route path="/mouvement" exact={true} render={props => <Budget {...props} lstMouvement={this.state.lstMouvement} />} />
                                     <Route
                                         path="/mouvement/import"
                                         render={props => (
-                                            <BudgetImport
-                                                {...props}
-                                                handleImport={() => this.handleImport}
-                                                lstMouvement={this.state.lstMouvement}
-                                            />
+                                            <BudgetImport {...props} handleImport={() => this.handleImport} lstMouvement={this.state.lstMouvement} />
                                         )}
                                     />
                                     <Route path="/about" component={About} />
