@@ -14,7 +14,6 @@ type PropsBudgetImport = {
     onSubmit: Function,
     lstMouvement: Array,
     history: any,
-    onHide: Function,
     match: any
 };
 
@@ -84,8 +83,6 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(event);
-        // this.props.handleImport(this.state.mouvementLst);
 
         // on save les nouveaux mouvements en base
         this.state.mouvementLst.forEach(mouvement => {
@@ -98,8 +95,10 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
 
         this.props.history.push('/mouvement');
     }
-    onHide(event) {
+
+    cancel(event) {
         event.preventDefault();
+        this.props.history.push('/mouvement');
     }
 
     render() {
@@ -134,8 +133,8 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
                         <Paging defaultPageSize={10} />
                     </DataGrid>
 
-                    <Button onClick={this.props.onHide}>Cancel</Button>
-                    <Button bsStyle="primary" type="submit">
+                    <Button onClick={this.cancel}>Cancel</Button>
+                    <Button className="primary" type="submit">
                         Import
                     </Button>
                 </form>

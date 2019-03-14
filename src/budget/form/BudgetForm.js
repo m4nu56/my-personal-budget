@@ -123,7 +123,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
                     <InputCategorie categorie={this.state.categorie} handleInputChange={this.handleInputChange} />
 
                     <Button onClick={this.props.onHide}>Cancel</Button>
-                    <Button bsStyle="primary" type="submit">
+                    <Button className="primary" type="submit">
                         Save changes
                     </Button>
                 </form>
