@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import {Link} from 'react-router-dom';
+import moment from 'moment';
 
 type PropsBudgetList = {
     lstMouvement: Array,
@@ -21,7 +22,7 @@ export default class BudgetList extends React.Component<PropsBudgetList> {
             return (
                 <tr key={index}>
                     <td>{mouvement.id}</td>
-                    <td>{mouvement.date}</td>
+                    <td>{moment(mouvement.date, 'X').format('DD/MM/YYYY')}</td>
                     <td>{mouvement.montant}</td>
                     <td>{mouvement.categorie}</td>
                     <td>{mouvement.libelle}</td>

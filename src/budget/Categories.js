@@ -150,19 +150,19 @@ export const CATEGORIES = [
         values: []
     },
     {
-        name: '',
+        name: 'ASSURANCE_HABITATION',
         libelle: 'Assurance habitation',
         parent: CATEGORIES_PARENT.MAISON,
         values: []
     },
     {
-        name: '',
+        name: 'ENTRETIEN_CHAUDIERE',
         libelle: 'Entretien chaudière',
         parent: CATEGORIES_PARENT.MAISON,
         values: []
     },
     {
-        name: '',
+        name: 'ENERGIES',
         libelle: 'Energies',
         parent: CATEGORIES_PARENT.MAISON,
         values: []

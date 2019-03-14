@@ -10,13 +10,19 @@ import Budget from '../budget/Budget';
 import fire from '../fire';
 import DevExtremeTest from '../devextreme/DevExtremeTest';
 import BudgetForm from '../budget/form/BudgetForm';
+import Dexie from 'dexie';
 
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
+        const db = new Dexie('Budget');
+        db.version(1).stores({
+            mouvement: 'id, date, libelle, categorie, montant'
+        });
         this.state = {
             isLogged: true,
-            lstMouvement: []
+            lstMouvement: [],
+            db: db
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
@@ -42,15 +48,29 @@ export default class Home extends React.Component {
         });
     }
 
-    componentWillMount() {
+    async initFire() {
+        const lastMouvementInIndexedDb = await this.state.db.mouvement
+            .orderBy('date')
+            .reverse()
+            .limit(1)
+            .toArray();
+
+        console.log(lastMouvementInIndexedDb[0]);
+
         let mouvementRef = fire
             .database()
             .ref('mouvements')
-            .orderByChild('date');
+            .orderByChild('date')
+            .startAt(lastMouvementInIndexedDb[0].date + 1);
 
-        mouvementRef.on('child_added', snapshot => {
+        mouvementRef.on('child_added', async snapshot => {
             let mouvement = snapshot.val();
             mouvement.id = snapshot.key;
+            try {
+                await this.state.db.mouvement.add(mouvement);
+            } catch (error) {
+                console.log(error);
+            }
 
             let lstMouvement = this.state.lstMouvement;
             lstMouvement.push(mouvement);
@@ -70,6 +90,21 @@ export default class Home extends React.Component {
                 lstMouvement: lstMouvement.filter(m => m.id !== snapshot.key)
             });
         });
+    }
+
+    async componentWillMount() {
+        // try reading data from the indexeddb local database
+        try {
+            const lst = await this.state.db.mouvement.toArray();
+            this.setState(
+                {
+                    lstMouvement: lst
+                },
+                () => this.initFire()
+            );
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     render() {

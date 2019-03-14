@@ -4,6 +4,7 @@ import BudgetForm from './form/BudgetForm';
 import fire from '../fire';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 export default class Budget extends React.Component {
     constructor(props) {
@@ -17,9 +18,14 @@ export default class Budget extends React.Component {
         this.handleHide = this.handleHide.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+
+        let val = moment('17/05/2019', 'DD/MM/YYYY', 'fr').format('X');
+        console.log(val);
+        console.log(moment(val, 'X').format('DD/MM/YYYY'));
     }
 
     handleSubmit = mouvement => {
+        console.log(mouvement);
         if (mouvement.id) {
             fire.database()
                 .ref('mouvements/')
@@ -66,10 +72,10 @@ export default class Budget extends React.Component {
                     className="btn btn-sm btn-primary m-2"
                     onClick={() =>
                         this.handleSubmit({
-                            date: Math.floor(Math.random() * 30) + 1 + '/' + (Math.floor(Math.random() * 11) + 1) + '/2019',
+                            date: moment(Math.floor(Math.random() * 30) + 1 + '/' + (Math.floor(Math.random() * 11) + 1) + '/2019', 'DD/MM/YYYY').format('X'),
                             libelle: Math.random()
                                 .toString(36)
-                                .substring(7),
+                                .substring(25),
                             categorie: Math.random()
                                 .toString(36)
                                 .substring(7),

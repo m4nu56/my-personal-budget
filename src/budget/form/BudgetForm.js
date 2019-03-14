@@ -26,7 +26,6 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
         super(props);
 
         this.state = {
-            id: props.match.params.id,
             date: moment().format('DD/MM/YYYY'),
             montant: 0.0,
             libelle: '',
@@ -38,7 +37,10 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
     }
 
     componentWillMount() {
-        const idMouvement = this.props.match.params.id;
+        const idMouvement = this.props.match != null && this.props.match.params != null ? this.props.match.params.id : null;
+        if (!idMouvement) {
+            return;
+        }
         let mouvementRef = fire
             .database()
             .ref('mouvements')
@@ -70,11 +72,12 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
         event.preventDefault();
         let mouvement = {
             id: this.state.id !== undefined ? this.state.id : null,
-            date: this.state.date,
+            date: moment(this.state.date, 'DD/MM/YYYY').format('X'),
             montant: this.state.montant,
             libelle: this.state.libelle,
             categorie: this.state.categorie
         };
+        console.log(this.state.date, moment(this.state.date, 'DD/MM/YYYY').format('X'));
         this.props.onSubmit(mouvement);
         this.setState({
             id: null,
