@@ -1,69 +1,30 @@
 import BudgetList from './list/BudgetList';
 import React from 'react';
-import BudgetForm from './form/BudgetForm';
-import fire from '../fire';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import BudgetForm from './form/BudgetForm';
 
 export default class Budget extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            mouvementEdited: null
-        };
+        this.state = {};
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleHide = this.handleHide.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-
-        let val = moment('17/05/2019', 'DD/MM/YYYY', 'fr').format('X');
-        console.log(val);
-        console.log(moment(val, 'X').format('DD/MM/YYYY'));
     }
 
     handleSubmit = mouvement => {
-        console.log(mouvement);
-        if (mouvement.id) {
-            fire.database()
-                .ref('mouvements/')
-                .child(mouvement.id)
-                .set(mouvement);
-        } else {
-            fire.database()
-                .ref('mouvements/')
-                .push(mouvement);
-        }
+        console.log('budget.js handleSubmit', mouvement);
         this.setState({
             mouvementEdited: null
         });
+        this.props.handleSaveMouvement(mouvement);
     };
-    handleDelete = mouvement => {
-        fire.database()
-            .ref('mouvements/')
-            .child(mouvement.id)
-            .remove();
-    };
-
-    handleHide() {
-        this.setState({
-            mouvementEdited: null
-        });
-    }
-
-    handleEdit(mouvement) {
-        this.setState({
-            mouvementEdited: mouvement
-        });
-    }
 
     render() {
-        let content = <BudgetList lstMouvement={this.props.lstMouvement} onEdit={this.handleEdit} onDelete={this.handleDelete} />;
-
-        if (this.state.mouvementEdited != null) {
-            content = <BudgetForm onSubmit={this.handleSubmit} onHide={this.handleHide} mouvement={this.state.mouvementEdited} />;
+        if (this.state.mouvementEdited) {
+            return <BudgetForm onSubmit={this.handleSubmit} onHide={() => this.setState({mouvementEdited: null})} />;
         }
 
         return (
@@ -83,26 +44,31 @@ export default class Budget extends React.Component {
                         })
                     }
                 >
-                    <i className="glyphicon glyphicon-plus" /> Ajouter un mouvement 222
+                    <i className="glyphicon glyphicon-plus" /> Ajouter un mouvement random
                 </button>
+
                 <button className="btn btn-sm btn-primary m-2" onClick={() => this.setState({mouvementEdited: {date: '01/01/2019'}})}>
-                    <i className="glyphicon glyphicon-plus" /> Ajouter un mouvement
+                    <i className="glyphicon glyphicon-plus" /> Form Ajouter un mouvement
                 </button>
+
                 <button className="btn btn-sm btn-primary m-2" onClick={() => this.props.lstMouvement.forEach(m => this.handleDelete(m))}>
                     <i className="glyphicon glyphicon-minus" /> Supprimer tous
                 </button>
+
                 <Link to="/mouvement/import" className="navbar-brand">
                     <button className="btn btn-sm btn-primary m-2">
                         <i className="glyphicon glyphicon-plus" /> Import
                     </button>
                 </Link>
 
-                {content}
+                <BudgetList lstMouvement={this.props.lstMouvement} onDelete={this.props.handleDelete} />
             </div>
         );
     }
 }
 
 Budget.propTypes = {
-    lstMouvement: PropTypes.array
+    lstMouvement: PropTypes.array,
+    handleSaveMouvement: Function,
+    handleDelete: Function
 };

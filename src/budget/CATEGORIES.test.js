@@ -1,7 +1,5 @@
 import React from 'react';
-import {shallow} from 'enzyme';
-import {CATEGORIES} from './Categories';
-import {findCategoryByLibelle} from './Categories';
+import {findCategoryByLibelle} from './CATEGORIES';
 import '../setUpTests';
 
 it('finds corresponding category', () => {

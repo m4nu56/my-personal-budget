@@ -6,7 +6,6 @@ import moment from 'moment';
 
 type PropsBudgetList = {
     lstMouvement: Array,
-    onEdit: Function,
     onDelete: Function
 };
 

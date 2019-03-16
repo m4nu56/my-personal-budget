@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {Button} from 'react-bootstrap';
-import {findCategoryByLibelle} from '../Categories';
+import {findCategoryByLibelle} from '../CATEGORIES';
 import moment from 'moment';
 import parseDecimalNumber from 'parse-decimal-number';
 import CONSTANTS from '../../Constants';

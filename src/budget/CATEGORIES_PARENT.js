@@ -1,0 +1,14 @@
+const CATEGORIES_PARENT = [
+    'REVENUS',
+    'CREDITS_ASSURANCE',
+    'EPARGNE',
+    'SANTE',
+    'MAISON',
+    'ENFANT',
+    'TRANSPORT_VEHICULE',
+    'LOISIRS_SPORTS',
+    'VACANCES',
+    'IMPOTS'
+];
+
+export default CATEGORIES_PARENT;

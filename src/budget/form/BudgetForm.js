@@ -2,15 +2,18 @@
 
 import React from 'react';
 import {Button} from 'react-bootstrap';
-import InputCategorie from '../InputCategorie';
+import InputCategorie from './InputCategorie';
 import fire from '../../fire';
 import moment from 'moment';
+import CONSTANTS from '../../Constants';
 
 type PropsBudgetForm = {
     onSubmit: Function,
+    handleSaveMouvement: Function,
     onHide: Function,
     mouvement: any,
-    match: any
+    match: any,
+    history: any
 };
 
 type StateBudgetForm = {
@@ -26,8 +29,8 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
         super(props);
 
         this.state = {
-            date: moment().format('DD/MM/YYYY'),
-            montant: 0.0,
+            date: '',
+            montant: '',
             libelle: '',
             categorie: ''
         };
@@ -50,7 +53,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
             const mouvement = snapshot.val();
             this.setState({
                 id: idMouvement,
-                date: mouvement.date,
+                date: moment(mouvement.date, CONSTANTS.DATE_FORMAT_DB).format(CONSTANTS.DATE_FORMAT),
                 montant: mouvement.montant,
                 libelle: mouvement.libelle,
                 categorie: mouvement.categorie
@@ -72,13 +75,14 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
         event.preventDefault();
         let mouvement = {
             id: this.state.id !== undefined ? this.state.id : null,
-            date: moment(this.state.date, 'DD/MM/YYYY').format('X'),
+            date: moment(this.state.date, CONSTANTS.DATE_FORMAT).format(CONSTANTS.DATE_FORMAT_DB),
             montant: this.state.montant,
             libelle: this.state.libelle,
             categorie: this.state.categorie
         };
-        console.log(this.state.date, moment(this.state.date, 'DD/MM/YYYY').format('X'));
-        this.props.onSubmit(mouvement);
+        this.props.handleSaveMouvement(mouvement);
+        this.props.history.push('/mouvement');
+
         this.setState({
             id: null,
             date: '',

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {CATEGORIES} from './Categories';
+import {CATEGORIES} from '../CATEGORIES';
 import PropTypes from 'prop-types';
 
 const InputCategorie = props => {
