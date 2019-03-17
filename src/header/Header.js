@@ -9,15 +9,15 @@ export default function Header() {
                 <div className="navbar-header">
                     <ul className="nav navbar-nav">
                         <li>
-                            <Link to="/mouvement" className="navbar-brand">
+                            <Link to="/analyze" className="navbar-brand">
                                 Home
                             </Link>
                         </li>
                         <li>
-                            <Link to="/mouvement/import">Import</Link>
+                            <Link to="/mouvement">Mouvements</Link>
                         </li>
                         <li>
-                            <Link to="/devextreme">DevExtreme</Link>
+                            <Link to="/mouvement/import">Import</Link>
                         </li>
                         <li>
                             <Link to="/about">About</Link>

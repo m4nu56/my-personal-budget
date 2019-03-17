@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import BudgetForm from './form/BudgetForm';
+import {CATEGORIES} from './CATEGORIES';
+import * as Utils from '../Utils';
 
 export default class Budget extends React.Component {
     constructor(props) {
@@ -44,9 +46,7 @@ export default class Budget extends React.Component {
                             libelle: Math.random()
                                 .toString(36)
                                 .substring(25),
-                            categorie: Math.random()
-                                .toString(36)
-                                .substring(7),
+                            categorie: CATEGORIES[Utils.getRandomInt(0, CATEGORIES.length)].name,
                             montant: Math.floor((Math.random() * 450 + 55) * 100) / 100
                         })
                     }

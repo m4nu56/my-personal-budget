@@ -8,11 +8,11 @@ import Header from '../header/Header';
 import BudgetImport from '../budget/import/BudgetImport';
 import Budget from '../budget/Budget';
 import fire from '../fire';
-import DevExtremeTest from '../devextreme/DevExtremeTest';
 import BudgetForm from '../budget/form/BudgetForm';
 import Dexie from 'dexie';
 import moment from 'moment';
 import NotificationSystem from 'react-notification-system';
+import BudgetAnalyze from '../budget/analyze/BudgetAnalyze';
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -210,6 +210,7 @@ export default class Home extends React.Component {
                         <div className="container" style={{marginTop: '30px'}}>
                             <div className="row align-items-center">
                                 <div className="col">
+                                    <Route path="/analyze" exact={true} render={props => <BudgetAnalyze {...props} lstMouvement={this.state.lstMouvement} />} />
                                     <Route
                                         path="/mouvement"
                                         exact={true}
@@ -235,7 +236,6 @@ export default class Home extends React.Component {
                                             render={props => <BudgetForm {...props} handleSaveMouvement={this.handleSaveMouvement} />}
                                         />
                                     </Switch>
-                                    <Route path="/devextreme" component={DevExtremeTest} />
                                     <Route path="/about" component={About} />
                                 </div>
                             </div>

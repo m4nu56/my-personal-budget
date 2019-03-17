@@ -5,7 +5,11 @@ import {CATEGORIES} from '../CATEGORIES';
 import PropTypes from 'prop-types';
 
 const InputCategorie = props => {
-    const optionCATEGORIES = CATEGORIES.map(c => <option key={c.name}>{c.libelle}</option>);
+    const optionCATEGORIES = CATEGORIES.map(c => (
+        <option key={c.name} value={c.name}>
+            {c.libelle}
+        </option>
+    ));
 
     return (
         <div className="form-group">

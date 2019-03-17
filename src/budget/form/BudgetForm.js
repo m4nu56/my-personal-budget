@@ -30,7 +30,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
 
         this.state = {
             date: '',
-            montant: '',
+            montant: 0,
             libelle: '',
             categorie: ''
         };
@@ -54,7 +54,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
             this.setState({
                 id: idMouvement,
                 date: moment(mouvement.date, CONSTANTS.DATE_FORMAT_DB).format(CONSTANTS.DATE_FORMAT),
-                montant: mouvement.montant,
+                montant: parseFloat(mouvement.montant),
                 libelle: mouvement.libelle,
                 categorie: mouvement.categorie
             });
@@ -84,7 +84,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
         let mouvement = {
             id: this.state.id !== undefined ? this.state.id : null,
             date: moment(this.state.date, CONSTANTS.DATE_FORMAT).format(CONSTANTS.DATE_FORMAT_DB),
-            montant: this.state.montant,
+            montant: parseFloat(this.state.montant),
             libelle: this.state.libelle,
             categorie: this.state.categorie
         };
@@ -101,7 +101,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
         this.setState({
             id: null,
             date: '',
-            montant: '',
+            montant: 0,
             libelle: '',
             categorie: ''
         });
@@ -128,7 +128,7 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
                     <div className="form-group">
                         <label htmlFor="montant">Montant</label>
                         <input
-                            type="text"
+                            type="number"
                             pattern="[0-9]+([\.,][0-9]+)?"
                             className="form-control"
                             id="montant"
