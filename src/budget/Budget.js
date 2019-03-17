@@ -24,7 +24,14 @@ export default class Budget extends React.Component {
 
     render() {
         if (this.state.mouvementEdited) {
-            return <BudgetForm onSubmit={this.handleSubmit} onHide={() => this.setState({mouvementEdited: null})} />;
+            return (
+                <BudgetForm
+                    {...this.props}
+                    onSubmit={this.handleSubmit}
+                    onHide={() => this.setState({mouvementEdited: null})}
+                    handleSaveMouvement={this.props.handleSaveMouvement}
+                />
+            );
         }
 
         return (
@@ -51,7 +58,7 @@ export default class Budget extends React.Component {
                     <i className="glyphicon glyphicon-plus" /> Form Ajouter un mouvement
                 </button>
 
-                <button className="btn btn-sm btn-primary m-2" onClick={() => this.props.lstMouvement.forEach(m => this.handleDelete(m))}>
+                <button className="btn btn-sm btn-primary m-2" onClick={() => this.props.lstMouvement.forEach(m => this.props.handleDelete(m))}>
                     <i className="glyphicon glyphicon-minus" /> Supprimer tous
                 </button>
 

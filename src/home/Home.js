@@ -12,6 +12,7 @@ import DevExtremeTest from '../devextreme/DevExtremeTest';
 import BudgetForm from '../budget/form/BudgetForm';
 import Dexie from 'dexie';
 import moment from 'moment';
+import NotificationSystem from 'react-notification-system';
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -25,11 +26,24 @@ export default class Home extends React.Component {
             lstMouvement: [],
             db: db
         };
+
+        this.notificationSystem = React.createRef();
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.handleImport = this.handleImport.bind(this);
         this.handleSaveMouvement = this.handleSaveMouvement.bind(this);
     }
+
+    addNotification = (message, level) => {
+        const notification = this.notificationSystem.current;
+        notification.addNotification({
+            message: message,
+            level: level,
+            autoDismiss: level === 'info' ? 1 : 5,
+            position: 'tr'
+        });
+    };
 
     handleLogout() {
         this.setState({
@@ -49,39 +63,54 @@ export default class Home extends React.Component {
             .ref('mouvements/')
             .child(mouvement.id)
             .remove()
-            .then(response => {
+            .then(() => {
                 console.log(`mouvement ${mouvement.id} deleted from firebase`);
+                this.addNotification(`Mouvement ${mouvement.id} correctement supprimé en base.`, 'success');
                 this.state.db.mouvement
                     .delete(mouvement.id)
-                    .then(() => console.info(`mouvement ${mouvement.id} deleted from dexie`))
-                    .catch(error => console.error(`error deleting ${mouvement.id} from dexie`, error));
+                    .then(() => {
+                        console.info(`mouvement ${mouvement.id} deleted from dexie`);
+                        this.addNotification(`Mouvement ${mouvement.id} correctement supprimé de dexie.`, 'success');
+                    })
+                    .catch(error => {
+                        console.error(`error deleting ${mouvement.id} from dexie`, error);
+                        this.addNotification(`Erreur lors de la suppression du mouvement ${mouvement.id} de dexie.`, 'error');
+                    });
             })
-            .catch(error => console.error(`error deleting mouvement ${mouvement.id}: ${error}`, error));
+            .catch(error => {
+                console.error(`error deleting mouvement from firebase ${mouvement.id}: ${error}`, error);
+                this.addNotification(`Erreur lors de la suppression du mouvement ${mouvement.id} de la base.`, 'error');
+            });
     };
 
     handleSaveMouvement(mouvement) {
-        console.log('handleSaveMouvement', mouvement);
         if (mouvement.id) {
             // update mouvement in db
             fire.database()
                 .ref('mouvements/')
                 .child(mouvement.id)
                 .set(mouvement)
-                .then(() => console.log(`mouvement ${mouvement} updated in db`))
-                .catch(error => console.error(`error inserting ${mouvement} in db: (${error}`, error));
-
-            // // and in state
-            // let lstMouvement = this.state.forEach(m => m.id === mouvement.id ? mouvement : m);
-            // this.setState({
-            //     lstMouvement: lstMouvement
-            // });
+                .then(() => {
+                    console.log(`mouvement ${mouvement} updated in db`);
+                    this.addNotification(`Mouvement ${mouvement.id} mis à jour.`, 'success');
+                })
+                .catch(error => {
+                    console.error(`error inserting ${mouvement} in db: (${error}`, error);
+                    this.addNotification(`Erreur mis a jour du mouvement ${mouvement.id}: ${error}`, 'error');
+                });
         } else {
             // create new mouvement in db
             fire.database()
                 .ref('mouvements/')
                 .push(mouvement)
-                .then(response => console.log(`mouvement ${mouvement} added in db: ${response.key}`, response))
-                .catch(error => console.error(`error inserting ${mouvement} in db: ${error}`, error));
+                .then(response => {
+                    console.log(`mouvement ${mouvement} added in db: ${response.key}`, response);
+                    this.addNotification(`Mouvement ${response.key} correctement ajouté.`, 'success');
+                })
+                .catch(error => {
+                    console.error(`error inserting ${mouvement} in db: ${error}`, error);
+                    this.addNotification(`Erreur création du mouvement ${mouvement}: ${error}`, 'error');
+                });
         }
     }
 
@@ -98,9 +127,9 @@ export default class Home extends React.Component {
             .reverse()
             .limit(1)
             .toArray();
-        console.log('lastMouvementInIndexedDb', moment(lastMouvementInIndexedDb[0].date).format());
         let startAt = moment('01/01/2019', 'DD/MM/YYYY').format('X');
         // if (lastMouvementInIndexedDb.length > 0) {
+        //     console.log('lastMouvementInIndexedDb', moment(lastMouvementInIndexedDb[0].date).format());
         //     startAt = lastMouvementInIndexedDb[0].date + 1;
         // }
 
@@ -111,7 +140,8 @@ export default class Home extends React.Component {
             .startAt(startAt);
 
         mouvementRef.on('child_added', async snapshot => {
-            console.info(`child_added: ${snapshot.key}`);
+            this.addNotification(`child_added: ${snapshot.key}`, 'info');
+
             let mouvement = snapshot.val();
             mouvement.id = snapshot.key;
 
@@ -124,23 +154,28 @@ export default class Home extends React.Component {
             });
             const mvtDexie = await this.state.db.mouvement.get(mouvement.id);
             if (mvtDexie !== undefined && mvtDexie != null) {
-                console.info(`mouvement ${mouvement.id} already exists in dexie`, mvtDexie);
+                this.addNotification(`mouvement ${mouvement.id} already exists in dexie`, 'info');
             } else {
                 this.state.db.mouvement
                     .add(mouvement)
-                    .then(response => console.log(`mouvement ${mouvement.id} added to dexie: ${response}`))
-                    .catch(error => console.error(`error insertind ${mouvement.id} to dexie: ${error}`));
+                    .then(response => {
+                        this.addNotification(`mouvement ${mouvement.id} added to dexie: ${response}`, 'success');
+                    })
+                    .catch(error => {
+                        console.error(`error insertind ${mouvement.id} to dexie: ${error}`);
+                        this.addNotification(`Erreur lors de l'insertion du mouvement ${mouvement.id} a dexie: ${error}`, 'error');
+                    });
             }
         });
         mouvementRef.on('child_changed', snapshot => {
-            console.log('child_changed', snapshot);
+            this.addNotification(`child_changed: ${snapshot.key}`, 'info');
             let lstMouvement = this.state.lstMouvement;
             this.setState({
                 lstMouvement: lstMouvement.map(m => (m.id === snapshot.key ? snapshot.val() : m))
             });
         });
         mouvementRef.on('child_removed', snapshot => {
-            console.info(`child_removed ${snapshot.key}`);
+            this.addNotification(`child_removed: ${snapshot.key}`, 'info');
             let lstMouvement = this.state.lstMouvement;
             this.setState({
                 lstMouvement: lstMouvement.filter(m => m.id !== snapshot.key)
@@ -207,6 +242,7 @@ export default class Home extends React.Component {
                         </div>
 
                         {/* <Footer handleLogout={this.handleLogout} /> */}
+                        <NotificationSystem ref={this.notificationSystem} />
                     </div>
                 </Router>
             );

@@ -71,6 +71,14 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
         });
     }
 
+    /**
+     * Ce composant peut être instancé de 2 façons:
+     * - Par le Router avec l'id du mouvement dans le path
+     * - Depuis le composant Budget pour la création d'un nouveau mouvement
+     *
+     * Le traitement du submit est un peu différent.
+     * @param event
+     */
     handleSubmit(event) {
         event.preventDefault();
         let mouvement = {
@@ -81,6 +89,13 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
             categorie: this.state.categorie
         };
         this.props.handleSaveMouvement(mouvement);
+
+        // Si instancié depuis Budget on a la méthode onHide qui réinitialise le state du composant Budget
+        if (this.props.onHide !== undefined) {
+            this.props.onHide();
+        }
+
+        // Et dans le cas du Router on redirige vers /mouvement
         this.props.history.push('/mouvement');
 
         this.setState({
