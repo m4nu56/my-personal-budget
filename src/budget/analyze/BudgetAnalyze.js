@@ -4,10 +4,6 @@ import AnalyzeRow from './AnalyzeRow';
 import PropTypes from 'prop-types';
 
 export default class BudgetAnalyze extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render(): React.ReactNode {
         let rows = [];
         CATEGORIES_PARENT.forEach(parent => {

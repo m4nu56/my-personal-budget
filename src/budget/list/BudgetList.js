@@ -12,10 +12,6 @@ type PropsBudgetList = {
 };
 
 export default class BudgetList extends React.Component<PropsBudgetList> {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const {lstMouvement} = this.props;
         const mouvementRows = lstMouvement.map((mouvement, index) => {

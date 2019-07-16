@@ -122,11 +122,11 @@ export default class Home extends React.Component {
 
     async initFire() {
         // look for the last mouvement in local db
-        const lastMouvementInIndexedDb = await this.state.db.mouvement
-            .orderBy('date')
-            .reverse()
-            .limit(1)
-            .toArray();
+        // const lastMouvementInIndexedDb = await this.state.db.mouvement
+        //     .orderBy('date')
+        //     .reverse()
+        //     .limit(1)
+        //     .toArray();
         let startAt = moment('01/01/2019', 'DD/MM/YYYY').format('X');
         // if (lastMouvementInIndexedDb.length > 0) {
         //     console.log('lastMouvementInIndexedDb', moment(lastMouvementInIndexedDb[0].date).format());
