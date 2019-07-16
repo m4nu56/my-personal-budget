@@ -3,27 +3,31 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
+import {CATEGORIES} from '../CATEGORIES';
+import PropTypes from 'prop-types';
 
 type PropsBudgetList = {
-    lstMouvement: Array,
-    onDelete: Function
+    lstMouvement: PropTypes.array,
+    onDelete: PropTypes.func
 };
 
 export default class BudgetList extends React.Component<PropsBudgetList> {
     constructor(props) {
         super(props);
-        this.state = {};
     }
 
     render() {
-        const lstMouvement = this.props.lstMouvement;
+        const {lstMouvement} = this.props;
         const mouvementRows = lstMouvement.map((mouvement, index) => {
+            let libelle = CATEGORIES.find(c => c.name === mouvement.categorie).libelle;
             return (
                 <tr key={index}>
                     <td>{mouvement.id}</td>
+                    <td>{mouvement.year}</td>
+                    <td>{mouvement.month}</td>
                     <td>{moment(mouvement.date, 'X').format('DD/MM/YYYY')}</td>
                     <td>{mouvement.montant}</td>
-                    <td>{mouvement.categorie}</td>
+                    <td>{libelle}</td>
                     <td>{mouvement.libelle}</td>
                     <td>
                         <Link to={`/mouvement/${mouvement.id}`}>
@@ -44,6 +48,8 @@ export default class BudgetList extends React.Component<PropsBudgetList> {
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Année</th>
+                        <th scope="col">Mois</th>
                         <th scope="col">Date</th>
                         <th scope="col">Montant</th>
                         <th scope="col">Catégorie</th>

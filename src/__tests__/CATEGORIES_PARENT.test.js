@@ -1,5 +1,5 @@
 import React from 'react';
-import {CATEGORIES} from './CATEGORIES';
+import {CATEGORIES} from '../budget/CATEGORIES';
 import '../setUpTests';
 
 it('finds children category from categoy parent', () => {

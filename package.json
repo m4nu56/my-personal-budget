@@ -39,7 +39,9 @@
         "husky": "^1.0.0-rc.8",
         "jquery": "^3.3.1",
         "prettier": "1.13.5",
-        "pretty-quick": "^1.6.0"
+        "pretty-quick": "^1.6.0",
+        "@types/jest": "^24.0.15",
+        "prop-types": "^15.7.2"
     },
     "extends": [
         "eslint:recommended",

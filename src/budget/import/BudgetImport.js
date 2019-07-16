@@ -53,13 +53,15 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
                     }
                     let date = colRow[0];
                     if (moment(colRow[0]).isValid()) {
-                        date = moment(colRow[0]).format(CONSTANTS.DATE_FORMAT);
+                        date = moment(colRow[0]);
                     } else {
                         return;
                     }
 
                     let mouvement = {
-                        date: date,
+                        year: date.format('YYYY'),
+                        month: date.format('MM'),
+                        date: date.format(CONSTANTS.DATE_FORMAT),
                         categorie: categorie ? categorie.name : colRow[1],
                         libelle: colRow[2],
                         montant: montant
@@ -124,6 +126,8 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
                         <FilterRow visible={true} />
                         <Selection mode={'multiple'} />
 
+                        <Column dataField={'year'} width={100} />
+                        <Column dataField={'month'} width={100} />
                         <Column dataField={'date'} dataType={'date'} width={150} />
                         <Column dataField={'libelle'} sortOrder={'asc'} />
                         <Column dataField={'categorie'} />

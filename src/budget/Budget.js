@@ -10,7 +10,6 @@ import * as Utils from '../Utils';
 export default class Budget extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {};
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,13 +35,16 @@ export default class Budget extends React.Component {
             );
         }
 
+        let dateRandom = moment(Math.floor(Math.random() * 30) + 1 + '/' + (Math.floor(Math.random() * 11) + 1) + '/2019', 'DD/MM/YYYY');
         return (
             <div className="text-center">
                 <button
                     className="btn btn-sm btn-primary m-2"
                     onClick={() =>
                         this.handleSubmit({
-                            date: moment(Math.floor(Math.random() * 30) + 1 + '/' + (Math.floor(Math.random() * 11) + 1) + '/2019', 'DD/MM/YYYY').format('X'),
+                            year: dateRandom.format('YYYY'),
+                            month: dateRandom.format('MM'),
+                            date: dateRandom.format(),
                             libelle: Math.random()
                                 .toString(36)
                                 .substring(25),
@@ -76,6 +78,6 @@ export default class Budget extends React.Component {
 
 Budget.propTypes = {
     lstMouvement: PropTypes.array,
-    handleSaveMouvement: Function,
-    handleDelete: Function
+    handleSaveMouvement: PropTypes.func,
+    handleDelete: PropTypes.func
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import {findCategoryByLibelle} from './CATEGORIES';
+import {findCategoryByLibelle} from '../budget/CATEGORIES';
 import '../setUpTests';
 
 it('finds corresponding category', () => {

@@ -83,6 +83,8 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
         event.preventDefault();
         let mouvement = {
             id: this.state.id !== undefined ? this.state.id : null,
+            year: moment(this.state.date, CONSTANTS.DATE_FORMAT).format('YYYY'),
+            month: moment(this.state.date, CONSTANTS.DATE_FORMAT).format('MM'),
             date: moment(this.state.date, CONSTANTS.DATE_FORMAT).format(CONSTANTS.DATE_FORMAT_DB),
             montant: parseFloat(this.state.montant),
             libelle: this.state.libelle,

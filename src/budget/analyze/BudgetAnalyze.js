@@ -12,7 +12,7 @@ export default class BudgetAnalyze extends React.Component {
         let rows = [];
         CATEGORIES_PARENT.forEach(parent => {
             rows.push(
-                <tr key={parent.name}>
+                <tr key={`parent_${parent.name}`}>
                     <td colSpan={13}>{parent.name}</td>
                 </tr>
             );

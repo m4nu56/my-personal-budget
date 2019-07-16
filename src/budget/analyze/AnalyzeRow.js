@@ -9,10 +9,10 @@ const AnalyzeRow = props => {
             .map(m => m.montant)
             .reduce((prev, current) => parseFloat(prev) + parseFloat(current), 0);
 
-        console.log(`${c.libelle} => ${value}`);
+        // console.log(`${c.libelle} => ${value}`);
 
         return (
-            <tr key={c.name}>
+            <tr key={`child_${c.name}`}>
                 <td>{c.name}</td>
                 <td>{value}</td>
                 <td>0.0</td>
