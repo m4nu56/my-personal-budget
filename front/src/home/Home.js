@@ -1,8 +1,8 @@
 import React from 'react';
-import LoginForm from './../login/LoginForm';
+import LoginForm from '../login/LoginForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import About from './../About';
+import About from '../About';
 import './home.css';
 import Header from '../header/Header';
 import BudgetImport from '../budget/import/BudgetImport';

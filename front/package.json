@@ -23,7 +23,7 @@
     },
     "scripts": {
         "flow": "flow",
-        "lint": "eslint ./src --fix",
+        "lint": "eslint src --fix",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test --env=jsdom",
