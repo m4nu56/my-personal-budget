@@ -1,4 +1,5 @@
 const request = require('supertest');
+const moment = require('moment');
 const app = require('../app'); // our Node application
 
 describe('Movements', () => {
@@ -18,6 +19,14 @@ describe('Movements', () => {
             category: 'Coucou'
         };
         await post(`/movements`, movement).expect(201);
+    });
+    it('test parsing date', () => {
+        let date = moment('2019-02-04T00:00:00+01:00');
+        expect(date.isValid()).toBeTruthy();
+        expect(date.format('DD')).toBe('04');
+        expect(date.format('D')).toBe('4');
+        expect(date.format('M')).toBe('2');
+        expect(date.format('YYYY')).toBe('2019');
     });
 });
 

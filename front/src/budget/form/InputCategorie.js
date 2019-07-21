@@ -13,8 +13,8 @@ const InputCategorie = props => {
 
     return (
         <div className="form-group">
-            <label htmlFor="categorie">Catégorie</label>
-            <select className="form-control" id="categorie" name="categorie" required value={props.categorie} onChange={props.handleInputChange}>
+            <label htmlFor="category">Catégorie</label>
+            <select className="form-control" id="category" name="category" required value={props.categorie} onChange={props.handleInputChange}>
                 <option />
                 {optionCATEGORIES}
             </select>

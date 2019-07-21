@@ -4,7 +4,6 @@ import * as React from 'react';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 import {CATEGORIES} from '../CATEGORIES';
-import PropTypes from 'prop-types';
 
 type PropsBudgetList = {
     lstMouvement: PropTypes.array,
@@ -12,19 +11,24 @@ type PropsBudgetList = {
 };
 
 export default class BudgetList extends React.Component<PropsBudgetList> {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         const {lstMouvement} = this.props;
         const mouvementRows = lstMouvement.map((mouvement, index) => {
-            let libelle = CATEGORIES.find(c => c.name === mouvement.categorie).libelle;
+            let find = CATEGORIES.find(c => c.name === mouvement.category);
+            let libelle = find ? find.libelle : mouvement.category;
             return (
                 <tr key={index}>
                     <td>{mouvement.id}</td>
                     <td>{mouvement.year}</td>
                     <td>{mouvement.month}</td>
-                    <td>{moment(mouvement.date, 'X').format('DD/MM/YYYY')}</td>
-                    <td>{mouvement.montant}</td>
+                    <td>{moment(mouvement.date).format('DD/MM/YYYY')}</td>
+                    <td>{mouvement.amount}</td>
                     <td>{libelle}</td>
-                    <td>{mouvement.libelle}</td>
+                    <td>{mouvement.label}</td>
                     <td>
                         <Link to={`/mouvement/${mouvement.id}`}>
                             <button className="btn btn-small">

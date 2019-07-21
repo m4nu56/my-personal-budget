@@ -9,8 +9,12 @@ const pool = new Pool({
     port: 5439
 });
 
+function buildQueryGetAllFromMovements() {
+    return 'SELECT id::integer, year, month, date, amount, label, category FROM t_movement';
+}
+
 const getMovements = (request, response) => {
-    let query = 'SELECT * FROM t_movement';
+    let query = buildQueryGetAllFromMovements();
     let requestParameters = null;
     if (request.query.category !== undefined) {
         query += ' WHERE category = $1';
@@ -21,6 +25,7 @@ const getMovements = (request, response) => {
         if (error) {
             throw error;
         }
+        console.log(results.rows);
         response.status(200).json(results.rows);
     });
 };
@@ -30,7 +35,7 @@ const getMovementById = (request, response) => {
     console.log(request.params);
     const id = parseInt(request.params.id);
 
-    pool.query('SELECT * FROM t_movement WHERE id = $1', [id], (error, results) => {
+    pool.query(buildQueryGetAllFromMovements() + ' WHERE id = $1', [id], (error, results) => {
         if (error) {
             throw error;
         }
@@ -39,19 +44,21 @@ const getMovementById = (request, response) => {
 };
 
 const createMovement = (request, response) => {
-    console.log('creating mouvement with data: ');
-    console.log(request.body);
     const {date, amount, label, category} = request.body;
+
+    console.log(date, moment(date), moment(date).format('D'), moment(date).format('M'));
 
     pool.query(
         'INSERT INTO t_movement (year, month, date, amount, label, category) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
-        [moment(date, 'X').format('DD'), moment(date, 'X').format('MM'), date, amount, label, category],
+        [Number(moment(date).format('YYYY')), Number(moment(date).format('M')), date, amount, label, category],
         (error, results) => {
             if (error) {
                 throw error;
             }
             console.log(results.rows);
-            response.status(201).send(`Movement added with ID: ${results.rows[0].id}`);
+            response.status(201).send(`{
+                "id": ${results.rows[0].id}
+            }`);
         }
     );
 };
@@ -67,19 +74,25 @@ const updateMovement = (request, response) => {
             if (error) {
                 throw error;
             }
-            response.status(200).send(`Movement modified with ID: ${id}`);
+            response.status(200).send(`{
+                "id": ${id}
+            }`);
         }
     );
 };
 
 const deleteMovement = (request, response) => {
     const id = parseInt(request.params.id);
+    if (isNaN(id)) {
+        console.error('Erreur impossible de supprimer le mouvement avec un id NaN');
+        return;
+    }
 
     pool.query('DELETE FROM t_movement WHERE id = $1', [id], (error, results) => {
         if (error) {
             throw error;
         }
-        response.status(200).send(`Movement deleted with ID: ${id}`);
+        response.status(200).send(`{"id": ${id}}`);
     });
 };
 
