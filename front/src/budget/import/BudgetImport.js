@@ -64,7 +64,7 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
             let mouvement = {
                 year: date.format('YYYY'),
                 month: date.format('M'),
-                date: date.format(CONSTANTS.DATE_FORMAT),
+                date: date.format(),
                 category: categorie ? categorie.name : colRow[1],
                 label: colRow[2],
                 amount: amount

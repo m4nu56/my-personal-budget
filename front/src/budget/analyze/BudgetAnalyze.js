@@ -2,8 +2,24 @@ import React from 'react';
 import CATEGORIES_PARENT from '../CATEGORIES_PARENT';
 import AnalyzeRow from './AnalyzeRow';
 import PropTypes from 'prop-types';
+import {makeFetch} from '../../api';
 
 export default class BudgetAnalyze extends React.Component {
+    constructor(props: P, context: any) {
+        super(props, context);
+        this.state = {
+            analyzeMovements: []
+        };
+    }
+
+    componentWillMount(): void {
+        makeFetch(`analyze`).then(results => {
+            this.setState({
+                analyzeMovements: results
+            });
+        });
+    }
+
     render(): React.ReactNode {
         let rows = [];
         CATEGORIES_PARENT.forEach(parent => {
@@ -12,7 +28,11 @@ export default class BudgetAnalyze extends React.Component {
                     <td colSpan={13}>{parent.name}</td>
                 </tr>
             );
-            rows.push(<AnalyzeRow parent={parent} lstMouvement={this.props.lstMouvement} />);
+            rows.push(<AnalyzeRow parent={parent} analyzeMovements={this.state.analyzeMovements} />);
+        });
+
+        this.state.analyzeMovements.forEach(analyze => {
+            rows.push(<AnalyzeRow parent={analyze.parent} analyzeMovements={analyze} />);
         });
 
         return (
