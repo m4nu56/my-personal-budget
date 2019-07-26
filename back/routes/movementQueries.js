@@ -102,7 +102,8 @@ const deleteMovement = (request, response) => {
  * @param response
  */
 const analyzeMovementByMonthByCategory = (request, response) => {
-    const query = 'select year, month, category, round(sum(amount)::numeric, 2) as total\n' +
+    const query =
+        'select year, month, category, round(sum(amount)::numeric, 2) as total\n' +
         'from t_movement\n' +
         'group by year, month, category\n' +
         'order by year, month, category\n';

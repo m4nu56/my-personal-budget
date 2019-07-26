@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const AnalyzeRow = props => {
     return CATEGORIES.filter(c => c.parent === props.parent.name).map(c => {
-        let tblValues = props.analyzeMovements.filter(m => m.category === c.name).map(m => Array[m.month] = m.total ? m.total : 0.0);
+        let tblValues = props.analyzeMovements.filter(m => m.category === c.name).map(m => (Array[m.month] = m.total ? m.total : 0.0));
 
         return (
             <tr key={`child_${c.name}`}>
