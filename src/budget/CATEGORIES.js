@@ -4,7 +4,9 @@ export function findCategoryByLibelle(libelle) {
     if (!libelle) {
         return null;
     }
-    const categoriesFound = CATEGORIES.filter(c => c.values.filter(l => libelle.includes(l)).length > 0);
+    const categoriesFound = CATEGORIES.filter(
+        c => c.values.filter(l => libelle.includes(l)).length > 0
+    );
     return categoriesFound.length > 0 ? categoriesFound[0] : null;
 }
 
@@ -25,6 +27,7 @@ export const CATEGORIES = [
     {
         name: 'CAF',
         libelle: 'CAF',
+        parent: CATEGORIES_PARENT.find(c => c.name === 'REVENUS').name,
         values: ['VIR SEPA RECU /DE CAF DES LANDES']
     },
     {
@@ -50,37 +53,43 @@ export const CATEGORIES = [
     {
         name: 'ASSURANCE_PRET_BNP',
         libelle: 'Assurance Prêt BNP',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE')
+            .name,
         values: ['ECHEANCE PRET 02228', 'ECHEANCE PRET 02228 5555']
     },
     {
         name: 'PRET_BNP',
         libelle: 'Prêt BNP',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE')
+            .name,
         values: ['ECHEANCE PRET 02228', 'ECHEANCE PRET 02228 5555']
     },
     {
         name: 'PRET_1P_PATRONAL',
         libelle: 'Prêt 1% Patronal',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE')
+            .name,
         values: []
     },
     {
         name: 'ASSURANCE_PRET_PATRONAL',
         libelle: 'Assurance Prêt 1%',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE')
+            .name,
         values: []
     },
     {
         name: 'FRAIS_BANCAIRE',
         libelle: 'Frais bancaires',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE')
+            .name,
         values: []
     },
     {
         name: 'PRET_AUTO',
         libelle: 'Prêt Auto',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'CREDITS_ASSURANCE')
+            .name,
         values: []
     },
 
@@ -252,31 +261,36 @@ export const CATEGORIES = [
     {
         name: 'PEAGES',
         libelle: 'Péages',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE')
+            .name,
         values: []
     },
     {
         name: 'CARBURANT_GOLF',
         libelle: 'Carburant GOLF',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE')
+            .name,
         values: []
     },
     {
         name: 'CARBURANT_508',
         libelle: 'Carburant 508',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE')
+            .name,
         values: []
     },
     {
         name: 'ASSURANCES_AUTO',
         libelle: 'Assurances Auto',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE')
+            .name,
         values: []
     },
     {
         name: 'ENTRETIEN_VEHICULES',
         libelle: 'Entretien Véhicules',
-        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE').name,
+        parent: CATEGORIES_PARENT.find(c => c.name === 'TRANSPORT_VEHICULE')
+            .name,
         values: []
     },
 
