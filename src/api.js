@@ -5,11 +5,17 @@ dotenv.config();
  * WIP Tentative de méthode centralisée pour effectuer les appels API
  *
  * @param url
+ * @param method
+ * @param payload
  * @returns {Promise<T | never>}
  */
-export const makeFetch = (url, method, payload) => {
+export const makeFetch = (url, method = 'GET', payload) => {
     let urlApi = `${process.env.REACT_APP_API_URL}/${url}`;
-    console.log(`urlApi call=${urlApi} with method=${method} and payload=`, payload);
+    console.log(
+        `urlApi call=${urlApi} with method=${method}` +
+            (payload ? ` and payload=` : ''),
+        payload
+    );
 
     const request = new window.Request(urlApi, {
         method: method ? method : 'GET',
@@ -36,8 +42,13 @@ export const makeFetch = (url, method, payload) => {
  */
 export const checkStatus = (response, mode = 'json') => {
     if (response.status < 200 || response.status >= 300) {
-        console.error(`status not ok = ${response.status} ${response.statusText}`, response);
-        throw new Error(`status not ok = ${response.status} ${response.statusText}`);
+        console.error(
+            `status not ok = ${response.status} ${response.statusText}`,
+            response
+        );
+        throw new Error(
+            `status not ok = ${response.status} ${response.statusText}`
+        );
     }
 
     return mode ? response[mode]() : response;
