@@ -25,7 +25,10 @@ type StateBudgetForm = {
     category: string
 };
 
-export default class BudgetForm extends React.Component<PropsBudgetForm, StateBudgetForm> {
+export default class BudgetForm extends React.Component<
+    PropsBudgetForm,
+    StateBudgetForm
+> {
     constructor(props) {
         super(props);
 
@@ -41,7 +44,10 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
     }
 
     componentWillMount() {
-        const idMouvement = this.props.match != null && this.props.match.params != null ? this.props.match.params.id : null;
+        const idMouvement =
+            this.props.match != null && this.props.match.params != null
+                ? this.props.match.params.id
+                : null;
         if (!idMouvement) {
             return;
         }
@@ -137,11 +143,24 @@ export default class BudgetForm extends React.Component<PropsBudgetForm, StateBu
                     </div>
                     <div className="form-group">
                         <label htmlFor="label">Libellé</label>
-                        <input type="text" className="form-control" id="label" name="label" value={this.state.label} onChange={this.handleInputChange} />
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="label"
+                            name="label"
+                            value={this.state.label}
+                            onChange={this.handleInputChange}
+                        />
                     </div>
-                    <InputCategorie {...this.props}
-                                    categoryId={this.state.category && this.state.category.id ? this.state.category.id : 0}
-                                    handleInputChange={this.handleInputChange}/>
+                    <InputCategorie
+                        {...this.props}
+                        categoryId={
+                            this.state.category && this.state.category.id
+                                ? this.state.category.id
+                                : 0
+                        }
+                        handleInputChange={this.handleInputChange}
+                    />
 
                     <Button onClick={this.props.onHide}>Cancel</Button>
                     <Button className="primary" type="submit">
