@@ -15,14 +15,7 @@ const InputCategorie = props => {
     return (
         <div className="form-group">
             <label htmlFor="category">Catégorie</label>
-            <select
-                className="form-control"
-                id="category"
-                name="category"
-                required
-                value={categoryId}
-                onChange={handleInputChange}
-            >
+            <select className="form-control" id="category" name="category" required value={categoryId} onChange={handleInputChange}>
                 <option />
                 {optionCATEGORIES}
             </select>
@@ -33,7 +26,7 @@ const InputCategorie = props => {
 InputCategorie.propTypes = {
     categoryId: PropTypes.number,
     handleInputChange: PropTypes.func,
-    lstCategories: PropTypes.array
+    lstCategories: PropTypes.array,
 };
 
 export default InputCategorie;

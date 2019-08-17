@@ -13,12 +13,9 @@ export default class BudgetAnalyze extends React.Component {
 
     componentWillMount(): void {
         makeFetch(`analyze/summary`).then(results => {
-            this.setState(
-                {
-                    analyzeMovements: JSON.parse(results)
-                },
-                () => console.log(this.state.analyzeMovements)
-            );
+            this.setState({
+                analyzeMovements: JSON.parse(results)
+            }, () => console.log(this.state.analyzeMovements));
         });
     }
 
@@ -26,13 +23,7 @@ export default class BudgetAnalyze extends React.Component {
         let rows = [];
 
         this.state.analyzeMovements.forEach((analyze, index) => {
-            rows.push(
-                <AnalyzeRow
-                    {...this.props}
-                    key={index}
-                    categorySummary={analyze}
-                />
-            );
+            rows.push(<AnalyzeRow {...this.props} key={index} categorySummary={analyze} />);
         });
 
         return (
@@ -65,5 +56,5 @@ export default class BudgetAnalyze extends React.Component {
 
 BudgetAnalyze.propTypes = {
     lstMouvement: PropTypes.array,
-    lstCategories: PropTypes.array
+    lstCategories: PropTypes.array,
 };

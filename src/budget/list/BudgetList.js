@@ -22,14 +22,11 @@ const BudgetList = props => {
                 <td>
                     <Link to={`/mouvement/${mouvement.id}`}>
                         <button className="btn btn-small">
-                            <i className="glyphicon glyphicon-edit" />
+                            <i className="glyphicon glyphicon-edit"/>
                         </button>
                     </Link>
-                    <button
-                        className="btn btn-small"
-                        onClick={() => onDelete(mouvement)}
-                    >
-                        <i className="glyphicon glyphicon-minus" />
+                    <button className="btn btn-small" onClick={() => onDelete(mouvement)}>
+                        <i className="glyphicon glyphicon-minus"/>
                     </button>
                 </td>
             </tr>
@@ -39,16 +36,16 @@ const BudgetList = props => {
     return (
         <table className="table table-sm table-striped">
             <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Année</th>
-                    <th scope="col">Mois</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Montant</th>
-                    <th scope="col">Catégorie</th>
-                    <th scope="col">Libelle</th>
-                    <th>#</th>
-                </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Année</th>
+                <th scope="col">Mois</th>
+                <th scope="col">Date</th>
+                <th scope="col">Montant</th>
+                <th scope="col">Catégorie</th>
+                <th scope="col">Libelle</th>
+                <th>#</th>
+            </tr>
             </thead>
             <tbody>{mouvementRows}</tbody>
         </table>

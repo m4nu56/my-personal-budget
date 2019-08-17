@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 const AnalyzeRow = props => {
     const {categorySummary, lstCategories} = props;
-    const category = lstCategories.find(
-        c => c.id === Number(categorySummary[0])
-    );
+    const category = lstCategories.find(c => c.id === Number(categorySummary[0]));
     const categoryId = category.id;
 
     let index = 1;
@@ -22,26 +20,22 @@ const AnalyzeRow = props => {
 
     return (
         <tr key={categorySummary[0]}>
-            <td>
-                {category.name} ({category.id})
-            </td>
+            <td>{category.name} ({category.id})</td>
             {rows}
             <td>{yearSum}</td>
         </tr>
     );
 };
 
-function getSumByMonth(categorySumMonth, month) {
+function getSumByMonth (categorySumMonth, month) {
     return Number(
-        categorySumMonth.find(a => a.month === month)
-            ? categorySumMonth.find(a => a.month === month).total
-            : 0.0
+        categorySumMonth.find(a => a.month === month) ? categorySumMonth.find(a => a.month === month).total : 0.0
     );
 }
 
 AnalyzeRow.propTypes = {
     categorySummary: PropTypes.array,
-    lstCategories: PropTypes.array
+    lstCategories: PropTypes.array,
 };
 
 export default AnalyzeRow;
