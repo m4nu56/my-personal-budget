@@ -12,12 +12,43 @@ import NotificationSystem from 'react-notification-system';
 import BudgetAnalyze from '../budget/analyze/BudgetAnalyze';
 import {makeFetch} from '../api';
 
+function fetchMovements() {
+    makeFetch(`movements`)
+        .then(response => {
+            this.setState({
+                lstMouvement: response
+            });
+        })
+        .catch(error => {
+            this.addNotification(
+                `Erreur lors de la récupération des mouvements. ${error}`,
+                'error'
+            );
+        });
+}
+
+function fetchCategories() {
+    makeFetch(`categories`)
+        .then(response => {
+            this.setState({
+                lstCategories: response
+            });
+        })
+        .catch(error => {
+            this.addNotification(
+                `Erreur lors de la récupération des catégories. ${error}`,
+                'error'
+            );
+        });
+}
+
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isLogged: true,
-            lstMouvement: []
+            lstMouvement: [],
+            lstCategories: []
         };
 
         this.notificationSystem = React.createRef();
@@ -52,15 +83,23 @@ export default class Home extends React.Component {
     handleDelete = mouvement => {
         makeFetch(`movements/${mouvement.id}`, 'DELETE')
             .then(result => {
-                this.addNotification(`Mouvement ${mouvement.id} supprimé.`, 'success');
+                this.addNotification(
+                    `Mouvement ${mouvement.id} supprimé.`,
+                    'success'
+                );
 
-                let lstMouvement = this.state.lstMouvement.filter(m => m.id !== mouvement.id);
+                let lstMouvement = this.state.lstMouvement.filter(
+                    m => m.id !== mouvement.id
+                );
                 this.setState({
                     lstMouvement: lstMouvement
                 });
             })
             .catch(error => {
-                this.addNotification(`Erreur suppression du mouvement ${mouvement.id}.`, 'error');
+                this.addNotification(
+                    `Erreur suppression du mouvement ${mouvement.id}.`,
+                    'error'
+                );
             });
     };
 
@@ -69,16 +108,30 @@ export default class Home extends React.Component {
             makeFetch(`movements/${mouvement.id}`, 'PUT', mouvement)
                 .then(result => {
                     console.log(`mouvement ${mouvement.id} updated in db`);
-                    this.addNotification(`Mouvement ${mouvement.id} mis à jour.`, 'success');
+                    this.addNotification(
+                        `Mouvement ${mouvement.id} mis à jour.`,
+                        'success'
+                    );
                 })
                 .catch(error => {
-                    console.error(`error inserting ${mouvement} in db: (${error}`, error);
-                    this.addNotification(`Erreur mis a jour du mouvement ${mouvement.id}: ${error}`, 'error');
+                    console.error(
+                        `error inserting ${mouvement} in db: (${error}`,
+                        error
+                    );
+                    this.addNotification(
+                        `Erreur mis a jour du mouvement ${
+                            mouvement.id
+                        }: ${error}`,
+                        'error'
+                    );
                 });
         } else {
             makeFetch(`movements`, 'POST', mouvement)
                 .then(result => {
-                    this.addNotification(`Mouvement ${result.id} créé.`, 'success');
+                    this.addNotification(
+                        `Mouvement ${result.id} créé.`,
+                        'success'
+                    );
                     let lstMouvement = this.state.lstMouvement;
                     mouvement.id = result.id;
                     lstMouvement.push(mouvement);
@@ -87,21 +140,20 @@ export default class Home extends React.Component {
                     });
                 })
                 .catch(error => {
-                    this.addNotification(`Erreur création du mouvement`, 'error');
+                    this.addNotification(
+                        `Erreur création du mouvement`,
+                        'error'
+                    );
                 });
         }
     };
 
     async componentWillMount() {
-        makeFetch(`movements`)
-            .then(response => {
-                this.setState({
-                    lstMouvement: response
-                });
-            })
-            .catch(error => {
-                this.addNotification(`Erreur lors de la récupération des mouvements. ${error}`, 'error');
-            });
+        // Chargemenet des mouvements
+        fetchMovements();
+
+        // Chargemenet des catégories
+        fetchCategories();
     }
 
     render() {
@@ -116,15 +168,36 @@ export default class Home extends React.Component {
                         <div className="container" style={{marginTop: '30px'}}>
                             <div className="row align-items-center">
                                 <div className="col">
-                                    <Route path="/analyze" exact={true} render={props => <BudgetAnalyze {...props} lstMouvement={this.state.lstMouvement} />} />
+                                    <Route
+                                        path="/analyze"
+                                        exact={true}
+                                        render={props => (
+                                            <BudgetAnalyze
+                                                {...props}
+                                                lstMouvement={
+                                                    this.state.lstMouvement
+                                                }
+                                                lstCategories={
+                                                    this.state.lstCategories
+                                                }
+                                            />
+                                        )}
+                                    />
                                     <Route
                                         path="/mouvement"
                                         exact={true}
                                         render={props => (
                                             <Budget
                                                 {...props}
-                                                lstMouvement={this.state.lstMouvement}
-                                                onSaveMouvement={this.onSaveMouvement}
+                                                lstMouvement={
+                                                    this.state.lstMouvement
+                                                }
+                                                lstCategories={
+                                                    this.state.lstCategories
+                                                }
+                                                onSaveMouvement={
+                                                    this.onSaveMouvement
+                                                }
                                                 handleDelete={this.handleDelete}
                                             />
                                         )}
@@ -134,10 +207,31 @@ export default class Home extends React.Component {
                                             path="/mouvement/import"
                                             exact={true}
                                             render={props => (
-                                                <BudgetImport {...props} lstMouvement={this.state.lstMouvement} onSaveMouvement={this.onSaveMouvement} />
+                                                <BudgetImport
+                                                    {...props}
+                                                    lstMouvement={
+                                                        this.state.lstMouvement
+                                                    }
+                                                    onSaveMouvement={
+                                                        this.onSaveMouvement
+                                                    }
+                                                />
                                             )}
                                         />
-                                        <Route path="/mouvement/:id" render={props => <BudgetForm {...props} onSaveMouvement={this.onSaveMouvement} />} />
+                                        <Route
+                                            path="/mouvement/:id"
+                                            render={props => (
+                                                <BudgetForm
+                                                    {...props}
+                                                    onSaveMouvement={
+                                                        this.onSaveMouvement
+                                                    }
+                                                    lstCategories={
+                                                        this.state.lstCategories
+                                                    }
+                                                />
+                                            )}
+                                        />
                                     </Switch>
                                     <Route path="/about" component={About} />
                                 </div>

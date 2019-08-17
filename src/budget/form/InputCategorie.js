@@ -1,20 +1,28 @@
 // @flow
 
 import React from 'react';
-import {CATEGORIES} from '../CATEGORIES';
 import PropTypes from 'prop-types';
 
 const InputCategorie = props => {
-    const optionCATEGORIES = CATEGORIES.map(c => (
-        <option key={c.name} value={c.name}>
-            {c.libelle}
+    const {categoryId, handleInputChange, lstCategories} = props;
+
+    const optionCATEGORIES = lstCategories.map(c => (
+        <option key={c.id} value={c.id}>
+            {c.name} ({c.id})
         </option>
     ));
 
     return (
         <div className="form-group">
             <label htmlFor="category">Catégorie</label>
-            <select className="form-control" id="category" name="category" required value={props.categorie} onChange={props.handleInputChange}>
+            <select
+                className="form-control"
+                id="category"
+                name="category"
+                required
+                value={categoryId}
+                onChange={handleInputChange}
+            >
                 <option />
                 {optionCATEGORIES}
             </select>
@@ -23,8 +31,9 @@ const InputCategorie = props => {
 };
 
 InputCategorie.propTypes = {
-    categorie: PropTypes.string,
-    handleInputChange: PropTypes.func
+    categoryId: PropTypes.number,
+    handleInputChange: PropTypes.func,
+    lstCategories: PropTypes.array
 };
 
 export default InputCategorie;

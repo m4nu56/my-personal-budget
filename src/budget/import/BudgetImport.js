@@ -2,12 +2,20 @@
 
 import React from 'react';
 import {Button} from 'react-bootstrap';
-import {findCategoryByLibelle} from '../CATEGORIES';
 import moment from 'moment';
 import parseDecimalNumber from 'parse-decimal-number';
 import CONSTANTS from '../../Constants';
 import './budget.css';
-import DataGrid, {Column, FilterRow, Grouping, GroupPanel, Pager, Paging, Selection} from 'devextreme-react/data-grid';
+import DataGrid, {
+    Column,
+    FilterRow,
+    Grouping,
+    GroupPanel,
+    Pager,
+    Paging,
+    Selection
+} from 'devextreme-react/data-grid';
+import {findCategoryByLabel} from '../CategoryUtils';
 
 type PropsBudgetImport = {
     onSubmit: Function,
@@ -19,7 +27,10 @@ type PropsBudgetImport = {
 
 type StateBudgetImport = {};
 
-export default class BudgetImport extends React.Component<PropsBudgetImport, StateBudgetImport> {
+export default class BudgetImport extends React.Component<
+    PropsBudgetImport,
+    StateBudgetImport
+> {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,7 +40,6 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
         };
 
         this.handleChange = this.handleChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
@@ -45,11 +55,14 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
         let mouvementLst = [];
         this.state.import.split('\n').forEach(row => {
             let colRow = row.split('\t');
-            let categorie = findCategoryByLibelle(colRow[2]);
+            let categorie = findCategoryByLabel(colRow[2]);
 
             let amount;
             if (colRow[3]) {
-                amount = parseDecimalNumber(colRow[3].replace('€', ''), CONSTANTS.DECIMAL_NUMBER_OPTIONS);
+                amount = parseDecimalNumber(
+                    colRow[3].replace('€', ''),
+                    CONSTANTS.DECIMAL_NUMBER_OPTIONS
+                );
             }
             if (!amount || isNaN(amount)) {
                 return;
@@ -72,7 +85,11 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
 
             // On test si le mouvement n'est pas déjà présent dans la liste
             this.props.lstMouvement.forEach(m => {
-                if (m.date === mouvement.date && m.amount === mouvement.amount && m.label === mouvement.label) {
+                if (
+                    m.date === mouvement.date &&
+                    m.amount === mouvement.amount &&
+                    m.label === mouvement.label
+                ) {
                     mouvement.duplicated = true;
                 }
             });
@@ -119,7 +136,10 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
                         />
                     </div>
 
-                    <DataGrid dataSource={this.state.mouvementLst} allowColumnReordering={true}>
+                    <DataGrid
+                        dataSource={this.state.mouvementLst}
+                        allowColumnReordering={true}
+                    >
                         <GroupPanel visible={true} />
                         <Grouping autoExpandAll={true} />
                         <FilterRow visible={true} />
@@ -127,12 +147,23 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
 
                         <Column dataField={'year'} width={100} />
                         <Column dataField={'month'} width={100} />
-                        <Column dataField={'date'} dataType={'date'} width={150} />
+                        <Column
+                            dataField={'date'}
+                            dataType={'date'}
+                            width={150}
+                        />
                         <Column dataField={'label'} sortOrder={'asc'} />
                         <Column dataField={'category'} />
-                        <Column dataField={'amount'} format={'currency'} width={100} />
+                        <Column
+                            dataField={'amount'}
+                            format={'currency'}
+                            width={100}
+                        />
 
-                        <Pager allowedPageSizes={[5, 10, 20]} showPageSizeSelector={true} />
+                        <Pager
+                            allowedPageSizes={[5, 10, 20]}
+                            showPageSizeSelector={true}
+                        />
                         <Paging defaultPageSize={10} />
                     </DataGrid>
 
