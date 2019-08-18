@@ -12,36 +12,6 @@ import NotificationSystem from 'react-notification-system';
 import BudgetAnalyze from '../budget/analyze/BudgetAnalyze';
 import {makeFetch} from '../api';
 
-function fetchMovements() {
-    makeFetch(`movements`)
-        .then(response => {
-            this.setState({
-                lstMouvement: response
-            });
-        })
-        .catch(error => {
-            this.addNotification(
-                `Erreur lors de la récupération des mouvements. ${error}`,
-                'error'
-            );
-        });
-}
-
-function fetchCategories() {
-    makeFetch(`categories`)
-        .then(response => {
-            this.setState({
-                lstCategories: response
-            });
-        })
-        .catch(error => {
-            this.addNotification(
-                `Erreur lors de la récupération des catégories. ${error}`,
-                'error'
-            );
-        });
-}
-
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -57,14 +27,53 @@ export default class Home extends React.Component {
         this.handleLogout = this.handleLogout.bind(this);
     }
 
+    async componentWillMount() {
+        // Chargement des mouvements
+        this.fetchMovements();
+        // Chargement des catégories
+        this.fetchCategories();
+    }
+
+    fetchMovements = () => {
+        makeFetch(`movements`)
+            .then(response => {
+                this.setState({
+                    lstMouvement: response
+                });
+            })
+            .catch(error => {
+                this.addNotification(
+                    `Erreur lors de la récupération des mouvements. ${error}`,
+                    'error'
+                );
+            });
+    };
+
+    fetchCategories = () => {
+        makeFetch(`categories`)
+            .then(response => {
+                this.setState({
+                    lstCategories: response
+                });
+            })
+            .catch(error => {
+                this.addNotification(
+                    `Erreur lors de la récupération des catégories. ${error}`,
+                    'error'
+                );
+            });
+    };
+
     addNotification = (message, level) => {
         const notification = this.notificationSystem.current;
-        notification.addNotification({
-            message: message,
-            level: level,
-            autoDismiss: level === 'info' ? 1 : 5,
-            position: 'tr'
-        });
+        if (notification != null) {
+            notification.addNotification({
+                message: message,
+                level: level,
+                autoDismiss: level === 'info' ? 1 : 5,
+                position: 'tr'
+            });
+        }
     };
 
     handleLogout() {
@@ -147,14 +156,6 @@ export default class Home extends React.Component {
                 });
         }
     };
-
-    async componentWillMount() {
-        // Chargemenet des mouvements
-        fetchMovements();
-
-        // Chargemenet des catégories
-        fetchCategories();
-    }
 
     render() {
         const isLogged = this.state.isLogged;

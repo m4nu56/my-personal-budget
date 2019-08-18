@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 /**
- * WIP Tentative de méthode centralisée pour effectuer les appels API
+ * méthode centralisée pour effectuer les appels API
  *
  * @param url
  * @param method
@@ -14,7 +14,7 @@ export const makeFetch = (url, method = 'GET', payload) => {
     console.log(
         `urlApi call=${urlApi} with method=${method}` +
             (payload ? ` and payload=` : ''),
-        payload
+        payload ? payload : ''
     );
 
     const request = new window.Request(urlApi, {
