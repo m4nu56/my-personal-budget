@@ -13,7 +13,7 @@ pre-commit: prettier && lint
 
 ## Deployment
 
-Merge request sur master déploient une version sur gitlab pages
+Merge request sur master déploie une version sur gitlab pages
 
 [Gitlab Pages](https://m4nu56.gitlab.io/react-test/)
 
@@ -22,7 +22,3 @@ Merge request sur master déploient une version sur gitlab pages
 -   [React]() - Front end
 
 ## Authors
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

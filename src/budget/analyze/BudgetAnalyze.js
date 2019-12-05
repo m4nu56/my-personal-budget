@@ -1,18 +1,38 @@
 import React from 'react';
-import CATEGORIES_PARENT from '../CATEGORIES_PARENT';
 import AnalyzeRow from './AnalyzeRow';
 import PropTypes from 'prop-types';
+import {makeFetch} from '../../api';
 
 export default class BudgetAnalyze extends React.Component {
-    render(): React.ReactNode {
-        let rows = [];
-        CATEGORIES_PARENT.forEach(parent => {
-            rows.push(
-                <tr key={`parent_${parent.name}`}>
-                    <td colSpan={13}>{parent.name}</td>
-                </tr>
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            analyzeMovements: []
+        };
+    }
+
+    componentWillMount() {
+        makeFetch(`analyze/summary`).then(results => {
+            this.setState(
+                {
+                    analyzeMovements: JSON.parse(results)
+                },
+                () => console.log(this.state.analyzeMovements)
             );
-            rows.push(<AnalyzeRow parent={parent} lstMouvement={this.props.lstMouvement} />);
+        });
+    }
+
+    render() {
+        let rows = [];
+
+        this.state.analyzeMovements.forEach((analyze, index) => {
+            rows.push(
+                <AnalyzeRow
+                    {...this.props}
+                    key={index}
+                    categorySummary={analyze}
+                />
+            );
         });
 
         return (
@@ -44,5 +64,6 @@ export default class BudgetAnalyze extends React.Component {
 }
 
 BudgetAnalyze.propTypes = {
-    lstMouvement: PropTypes.array
+    lstMouvement: PropTypes.array,
+    lstCategories: PropTypes.array
 };

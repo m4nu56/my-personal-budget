@@ -2,27 +2,37 @@
 
 import React from 'react';
 import {Button} from 'react-bootstrap';
-import {findCategoryByLibelle} from '../CATEGORIES';
 import moment from 'moment';
 import parseDecimalNumber from 'parse-decimal-number';
 import CONSTANTS from '../../Constants';
-import fire from '../../fire';
 import './budget.css';
-import DataGrid, {Column, FilterRow, Grouping, GroupPanel, Pager, Paging, Selection} from 'devextreme-react/data-grid';
+import DataGrid, {
+    Column,
+    FilterRow,
+    Grouping,
+    GroupPanel,
+    Pager,
+    Paging,
+    Selection
+} from 'devextreme-react/data-grid';
+import {findCategoryByLabel} from '../CategoryUtils';
 
 type PropsBudgetImport = {
     onSubmit: Function,
     lstMouvement: Array,
     history: any,
-    match: any
+    match: any,
+    onSaveMouvement: Function
 };
 
 type StateBudgetImport = {};
 
-export default class BudgetImport extends React.Component<PropsBudgetImport, StateBudgetImport> {
+export default class BudgetImport extends React.Component<
+    PropsBudgetImport,
+    StateBudgetImport
+> {
     constructor(props) {
         super(props);
-        console.log('props', props);
         this.state = {
             import:
                 '05-03-2019	Prêt 1% Patronal	PRLV SEPA ALS ACTION LOGEMENT SERVICES ECH/050319 ID EMETTEUR/FR30ZZZ822E81 MDT/PER00200003246 REF/000012928571LOANSN LIB/000012928571LOANSN	-70,67 €',
@@ -30,7 +40,6 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
@@ -38,65 +47,73 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
             {
                 import: event.target.value
             },
-            () => {
-                let mouvementLst = [];
-                this.state.import.split('\n').forEach(row => {
-                    let colRow = row.split('\t');
-                    let categorie = findCategoryByLibelle(colRow[2]);
-
-                    let montant = 0.0;
-                    if (colRow[3]) {
-                        montant = parseDecimalNumber(colRow[3].replace('€', ''), CONSTANTS.DECIMAL_NUMBER_OPTIONS);
-                    }
-                    if (montant.isNaN) {
-                        return;
-                    }
-                    let date = colRow[0];
-                    if (moment(colRow[0]).isValid()) {
-                        date = moment(colRow[0]);
-                    } else {
-                        return;
-                    }
-
-                    let mouvement = {
-                        year: date.format('YYYY'),
-                        month: date.format('MM'),
-                        date: date.format(CONSTANTS.DATE_FORMAT),
-                        categorie: categorie ? categorie.name : colRow[1],
-                        libelle: colRow[2],
-                        montant: montant
-                    };
-
-                    // On test si le mouvement n'est pas déjà présent dans la liste
-                    this.props.lstMouvement.forEach(m => {
-                        if (m.date === mouvement.date && m.montant === mouvement.montant && m.libelle === mouvement.libelle) {
-                            mouvement.duplicated = true;
-                        }
-                    });
-
-                    mouvementLst.push(mouvement);
-                });
-                this.setState({
-                    mouvementLst: mouvementLst
-                });
-            }
+            () => this.createMouvementFromRows()
         );
     }
 
-    handleSubmit(event) {
+    createMouvementFromRows = () => {
+        let mouvementLst = [];
+        this.state.import.split('\n').forEach(row => {
+            let colRow = row.split('\t');
+            console.table(colRow);
+            let categorie = findCategoryByLabel(colRow[1]);
+
+            let amount;
+            if (colRow[3]) {
+                amount = parseDecimalNumber(
+                    colRow[3].replace('€', ''),
+                    CONSTANTS.DECIMAL_NUMBER_OPTIONS
+                );
+            }
+            if (!amount || isNaN(amount)) {
+                return;
+            }
+            let date = colRow[0];
+            if (moment(colRow[0]).isValid()) {
+                date = moment(colRow[0], 'DD-MM-YYYY');
+            } else {
+                return;
+            }
+
+            let mouvement = {
+                year: date.format('YYYY'),
+                month: date.format('M'),
+                date: date.format(),
+                category: categorie ? categorie.name : colRow[1],
+                label: colRow[2],
+                amount: amount
+            };
+
+            // On test si le mouvement n'est pas déjà présent dans la liste
+            this.props.lstMouvement.forEach(m => {
+                if (
+                    m.date === mouvement.date &&
+                    m.amount === mouvement.amount &&
+                    m.label === mouvement.label
+                ) {
+                    mouvement.duplicated = true;
+                }
+            });
+
+            mouvementLst.push(mouvement);
+        });
+        this.setState({
+            mouvementLst: mouvementLst
+        });
+    };
+
+    handleSubmit = event => {
         event.preventDefault();
 
         // on save les nouveaux mouvements en base
         this.state.mouvementLst.forEach(mouvement => {
             if (!mouvement.duplicated) {
-                fire.database()
-                    .ref('mouvements/')
-                    .push(mouvement);
+                this.props.onSaveMouvement(mouvement);
             }
         });
 
         this.props.history.push('/mouvement');
-    }
+    };
 
     cancel(event) {
         event.preventDefault();
@@ -120,7 +137,10 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
                         />
                     </div>
 
-                    <DataGrid dataSource={this.state.mouvementLst} allowColumnReordering={true}>
+                    <DataGrid
+                        dataSource={this.state.mouvementLst}
+                        allowColumnReordering={true}
+                    >
                         <GroupPanel visible={true} />
                         <Grouping autoExpandAll={true} />
                         <FilterRow visible={true} />
@@ -128,12 +148,23 @@ export default class BudgetImport extends React.Component<PropsBudgetImport, Sta
 
                         <Column dataField={'year'} width={100} />
                         <Column dataField={'month'} width={100} />
-                        <Column dataField={'date'} dataType={'date'} width={150} />
-                        <Column dataField={'libelle'} sortOrder={'asc'} />
-                        <Column dataField={'categorie'} />
-                        <Column dataField={'montant'} format={'currency'} width={100} />
+                        <Column
+                            dataField={'date'}
+                            dataType={'date'}
+                            width={150}
+                        />
+                        <Column dataField={'label'} sortOrder={'asc'} />
+                        <Column dataField={'category'} />
+                        <Column
+                            dataField={'amount'}
+                            format={'currency'}
+                            width={100}
+                        />
 
-                        <Pager allowedPageSizes={[5, 10, 20]} showPageSizeSelector={true} />
+                        <Pager
+                            allowedPageSizes={[5, 10, 20]}
+                            showPageSizeSelector={true}
+                        />
                         <Paging defaultPageSize={10} />
                     </DataGrid>
 

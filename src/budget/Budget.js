@@ -4,23 +4,20 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import BudgetForm from './form/BudgetForm';
-import {CATEGORIES} from './CATEGORIES';
-import * as Utils from '../Utils';
 
 export default class Budget extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
-
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            mouvementEdited: null
+        };
     }
 
     handleSubmit = mouvement => {
-        console.log('budget.js handleSubmit', mouvement);
         this.setState({
             mouvementEdited: null
         });
-        this.props.handleSaveMouvement(mouvement);
+        this.props.onSaveMouvement(mouvement);
     };
 
     render() {
@@ -28,39 +25,65 @@ export default class Budget extends React.Component {
             return (
                 <BudgetForm
                     {...this.props}
-                    onSubmit={this.handleSubmit}
+                    onSubmit={() => this.handleSubmit}
                     onHide={() => this.setState({mouvementEdited: null})}
-                    handleSaveMouvement={this.props.handleSaveMouvement}
+                    onSaveMouvement={this.props.onSaveMouvement}
                 />
             );
         }
 
-        let dateRandom = moment(Math.floor(Math.random() * 30) + 1 + '/' + (Math.floor(Math.random() * 11) + 1) + '/2019', 'DD/MM/YYYY');
+        const dateRandom = moment(
+            Math.floor(Math.random() * 30) +
+                1 +
+                '/' +
+                (Math.floor(Math.random() * 11) + 1) +
+                '/2019',
+            'DD/MM/YYYY'
+        );
+        const category = this.props.lstCategories[
+            Math.floor(Math.random() * this.props.lstCategories.length)
+        ];
         return (
             <div className="text-center">
                 <button
                     className="btn btn-sm btn-primary m-2"
                     onClick={() =>
                         this.handleSubmit({
-                            year: dateRandom.format('YYYY'),
-                            month: dateRandom.format('MM'),
+                            year: Number(dateRandom.format('YYYY')),
+                            month: Number(dateRandom.format('M')),
                             date: dateRandom.format(),
-                            libelle: Math.random()
+                            label: Math.random()
                                 .toString(36)
                                 .substring(25),
-                            categorie: CATEGORIES[Utils.getRandomInt(0, CATEGORIES.length)].name,
-                            montant: Math.floor((Math.random() * 450 + 55) * 100) / 100
+                            category: category,
+                            amount:
+                                Math.floor((Math.random() * 450 + 55) * 100) /
+                                100
                         })
                     }
                 >
-                    <i className="glyphicon glyphicon-plus" /> Ajouter un mouvement random
+                    <i className="glyphicon glyphicon-plus" /> Ajouter un
+                    mouvement random
                 </button>
 
-                <button className="btn btn-sm btn-primary m-2" onClick={() => this.setState({mouvementEdited: {date: '01/01/2019'}})}>
-                    <i className="glyphicon glyphicon-plus" /> Form Ajouter un mouvement
+                <button
+                    className="btn btn-sm btn-primary m-2"
+                    onClick={() =>
+                        this.setState({mouvementEdited: {date: '01/01/2019'}})
+                    }
+                >
+                    <i className="glyphicon glyphicon-plus" /> Form Ajouter un
+                    mouvement
                 </button>
 
-                <button className="btn btn-sm btn-primary m-2" onClick={() => this.props.lstMouvement.forEach(m => this.props.handleDelete(m))}>
+                <button
+                    className="btn btn-sm btn-primary m-2"
+                    onClick={() =>
+                        this.props.lstMouvement.forEach(m =>
+                            this.props.handleDelete(m)
+                        )
+                    }
+                >
                     <i className="glyphicon glyphicon-minus" /> Supprimer tous
                 </button>
 
@@ -70,7 +93,10 @@ export default class Budget extends React.Component {
                     </button>
                 </Link>
 
-                <BudgetList lstMouvement={this.props.lstMouvement} onDelete={this.props.handleDelete} />
+                <BudgetList
+                    lstMouvement={this.props.lstMouvement}
+                    onDelete={this.props.handleDelete}
+                />
             </div>
         );
     }
@@ -78,6 +104,7 @@ export default class Budget extends React.Component {
 
 Budget.propTypes = {
     lstMouvement: PropTypes.array,
-    handleSaveMouvement: PropTypes.func,
-    handleDelete: PropTypes.func
+    lstCategories: PropTypes.array,
+    handleDelete: PropTypes.func,
+    onSaveMouvement: PropTypes.func
 };

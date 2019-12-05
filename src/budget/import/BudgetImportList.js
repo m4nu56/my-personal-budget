@@ -4,7 +4,6 @@ import DataGrid from './BudgetImport';
 import PropTypes from 'prop-types';
 
 const BudgetImportList = props => {
-    console.log(props.lstMouvement);
     return (
         <DataGrid dataSource={props.lstMouvement} allowColumnReordering={true}>
             <GroupPanel visible={true} />

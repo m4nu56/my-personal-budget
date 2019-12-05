@@ -1,39 +1,51 @@
-import {CATEGORIES} from '../CATEGORIES';
 import React from 'react';
 import PropTypes from 'prop-types';
 
 const AnalyzeRow = props => {
-    return CATEGORIES.filter(c => c.parent === props.parent.name).map(c => {
-        let value = props.lstMouvement
-            .filter(m => m.categorie === c.name)
-            .map(m => m.montant)
-            .reduce((prev, current) => parseFloat(prev) + parseFloat(current), 0);
+    const {categorySummary, lstCategories} = props;
+    let category = lstCategories.find(c => c.id === Number(categorySummary[0]));
+    if (!category) {
+        category = {
+            id: Number(categorySummary[0]),
+            name: 'Undefined'
+        };
+    }
+    const categoryId = category.id;
 
-        // console.log(`${c.libelle} => ${value}`);
+    let index = 1;
+    let sum = [];
+    let rows = [];
+    let yearSum = 0.0;
 
-        return (
-            <tr key={`child_${c.name}`}>
-                <td>{c.name}</td>
-                <td>{value}</td>
-                <td>0.0</td>
-                <td>0.0</td>
-                <td>0.0</td>
-                <td>0.0</td>
-                <td>0.0</td>
-                <td>0.0</td>
-                <td>0.0</td>
-                <td>0.0</td>
-                <td>0.0</td>
-                <td>0.0</td>
-                <td>0.0</td>
-            </tr>
-        );
-    });
+    while (index <= 12) {
+        sum[index] = getSumByMonth(categorySummary[1], index);
+        rows.push(<td key={`${categoryId}_${index}`}>{sum[index]}</td>);
+        yearSum = yearSum + sum[index];
+        index++;
+    }
+
+    return (
+        <tr key={categorySummary[0]}>
+            <td>
+                {category.name} (id: {category.id})
+            </td>
+            {rows}
+            <td>{yearSum}</td>
+        </tr>
+    );
 };
 
+function getSumByMonth(categorySumMonth, month) {
+    return Number(
+        categorySumMonth.find(a => a.month === month)
+            ? categorySumMonth.find(a => a.month === month).total
+            : 0.0
+    );
+}
+
 AnalyzeRow.propTypes = {
-    parent: PropTypes.object,
-    key: PropTypes.string
+    categorySummary: PropTypes.array,
+    lstCategories: PropTypes.array
 };
 
 export default AnalyzeRow;
