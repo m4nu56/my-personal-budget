@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 
 const AnalyzeRow = props => {
     const {categorySummary, lstCategories} = props;
-    const category = lstCategories.find(
-        c => c.id === Number(categorySummary[0])
-    );
+    let category = lstCategories.find(c => c.id === Number(categorySummary[0]));
+    if (!category) {
+        category = {
+            id: Number(categorySummary[0]),
+            name: 'Undefined'
+        };
+    }
     const categoryId = category.id;
 
     let index = 1;
@@ -23,7 +27,7 @@ const AnalyzeRow = props => {
     return (
         <tr key={categorySummary[0]}>
             <td>
-                {category.name} ({category.id})
+                {category.name} (id: {category.id})
             </td>
             {rows}
             <td>{yearSum}</td>

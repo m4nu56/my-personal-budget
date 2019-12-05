@@ -27,7 +27,7 @@ export default class Home extends React.Component {
         this.handleLogout = this.handleLogout.bind(this);
     }
 
-    async componentWillMount() {
+    componentWillMount() {
         // Chargement des mouvements
         this.fetchMovements();
         // Chargement des catégories

@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import {makeFetch} from '../../api';
 
 export default class BudgetAnalyze extends React.Component {
-    constructor(props: P, context: any) {
+    constructor(props, context) {
         super(props, context);
         this.state = {
             analyzeMovements: []
         };
     }
 
-    componentWillMount(): void {
+    componentWillMount() {
         makeFetch(`analyze/summary`).then(results => {
             this.setState(
                 {
@@ -22,7 +22,7 @@ export default class BudgetAnalyze extends React.Component {
         });
     }
 
-    render(): React.ReactNode {
+    render() {
         let rows = [];
 
         this.state.analyzeMovements.forEach((analyze, index) => {

@@ -55,7 +55,8 @@ export default class BudgetImport extends React.Component<
         let mouvementLst = [];
         this.state.import.split('\n').forEach(row => {
             let colRow = row.split('\t');
-            let categorie = findCategoryByLabel(colRow[2]);
+            console.table(colRow);
+            let categorie = findCategoryByLabel(colRow[1]);
 
             let amount;
             if (colRow[3]) {

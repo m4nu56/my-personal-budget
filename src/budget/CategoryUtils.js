@@ -1,4 +1,4 @@
-export function findCategoryByLabel(label, lstCategories) {
+export function findCategoryByLabel(label, lstCategories = []) {
     if (!label) {
         return null;
     }
