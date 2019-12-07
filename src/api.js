@@ -9,7 +9,7 @@ dotenv.config();
  * @param payload
  * @returns {Promise<T | never>}
  */
-export const makeFetch = (url, method = 'GET', payload) => {
+export const makeRequest = (url, method = 'GET', payload) => {
     let urlApi = `${process.env.REACT_APP_API_URL}/${url}`;
     console.log(
         `urlApi call=${urlApi} with method=${method}` +

@@ -1,67 +1,38 @@
 {
-    "name": "budget-app",
-    "version": "0.1.0",
-    "private": true,
-    "homepage": "https://m4nu56.gitlab.io/react-test/",
-    "dependencies": {
-        "bootstrap": "^3.3.7",
-        "devextreme": "^18.2.6",
-        "devextreme-react": "^18.2.6",
-        "enzyme": "^3.9.0",
-        "enzyme-adapter-react-16": "^1.10.0",
-        "moment": "^2.24.0",
-        "parse-decimal-number": "^1.0.0",
-        "react": "^16.12.0",
-        "react-bootstrap": "^1.0.0-beta.5",
-        "react-dom": "^16.12.0",
-        "react-notification-system": "^0.2.17",
-        "react-router-dom": "^4.2.2",
-        "react-scripts": "^2.1.8",
-        "react-test-renderer": "^16.12.0"
-    },
-    "scripts": {
-        "flow": "flow",
-        "lint": "eslint src --fix",
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject",
-        "prettier": "prettier --write src/**/*{js,css,md}",
-        "pretty-quick": "pretty-quick"
-    },
-    "devDependencies": {
-        "@types/jest": "^24.0.15",
-        "dotenv": "^8.2.0",
-        "eslint": "^5.12.0",
-        "eslint-config-google": "^0.9.1",
-        "eslint-plugin-flowtype": "^2.49.3",
-        "flow-bin": "^0.74.0",
-        "husky": "^1.0.0-rc.8",
-        "jquery": "^3.3.1",
-        "prettier": "1.13.5",
-        "pretty-quick": "^1.6.0",
-        "prop-types": "^15.7.2"
-    },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+  "name": "budget",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "prop-types": "^15.7.2",
+    "ra-data-json-server": "^3.0.3",
+    "react": "^16.12.0",
+    "react-admin": "^3.0.3",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.3.0",
+    "dotenv": "latest"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged",
-            "pre-push": "npm run-script lint"
-        }
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
