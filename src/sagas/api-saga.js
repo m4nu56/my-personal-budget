@@ -1,6 +1,6 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 import { SHOW_NOTIFICATION } from 'react-admin'
-import { DASHBOARD, DASHBOARD_DATA } from '../constants/actions'
+import {CATEGORIES, CATEGORIES_DATA, DASHBOARD, DASHBOARD_DATA} from '../constants/actions';
 import { makeRequest } from '../api'
 
 /**
@@ -10,21 +10,33 @@ import { makeRequest } from '../api'
  */
 export default function * watchAll () {
   yield all([
-    takeEvery(DASHBOARD, dashboardSaga)
+    takeEvery(DASHBOARD, dashboardSaga),
+    takeEvery(CATEGORIES, categoriesSaga)
   ])
 }
 
 /**
- * Appel API
- *
- * @returns {IterableIterator<*>}
+ * Appel API pour récupérer les datas du dashboard
  */
 function * dashboardSaga () {
   try {
-    const payload = yield call(makeRequest, 'analyze')
+    const payload = yield call(makeRequest, 'analyze/summary')
     yield put({ type: DASHBOARD_DATA, payload: payload })
   } catch (e) {
     // en cas d'erreur on affiche un message
     yield put({ type: SHOW_NOTIFICATION, payload: { message: `Erreur lors de la récupération du dashboard: ${e.message}`, type: 'error' } })
+  }
+}
+
+/**
+ * Appel API pour récupérer les datas du dashboard
+ */
+function * categoriesSaga () {
+  try {
+    const payload = yield call(makeRequest, 'categories')
+    yield put({ type: CATEGORIES_DATA, payload: payload })
+  } catch (e) {
+    // en cas d'erreur on affiche un message
+    yield put({ type: SHOW_NOTIFICATION, payload: { message: `Erreur lors de la récupération des catégories: ${e.message}`, type: 'error' } })
   }
 }

@@ -1,4 +1,4 @@
-import { DASHBOARD_DATA } from '../constants/actions'
+import {CATEGORIES_DATA, DASHBOARD_DATA} from '../constants/actions';
 
 const initialState = {
   dashboardData: []
@@ -8,15 +8,24 @@ const initialState = {
 // On peut ajouter nos propres reducer pour nos propres actions métier synchrones ici
 // Pour les asynchrones on utilisera les sagas
 function rootReducer (previousState = initialState, action) {
+
   if (action.type === DASHBOARD_DATA) {
-    let newState = Object.assign({}, previousState, {
+    return Object.assign({}, previousState, {
       dashboardData: action.payload
     })
-    console.log('DASHBOARD_DATA from, to', previousState, newState)
-    return newState
+  }
+  if (action.type === CATEGORIES_DATA) {
+    return Object.assign({}, previousState, {
+      categories: action.payload.data
+    })
+  }
+  if (action.type === 'increment-counter') {
+    return Object.assign({}, previousState, {
+      count: previousState.count != null ? ++previousState.count : 0
+    })
   }
 
-  return previousState
+  return previousState;
 }
 
 export default rootReducer

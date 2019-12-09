@@ -1,10 +1,7 @@
-import React from 'react'
-import {
-  Edit, SimpleForm, TextInput, NumberInput, DisabledInput,
-  required
-} from 'react-admin'
+import React from 'react';
+import {Edit, NumberInput, required, SimpleForm, TextInput} from 'react-admin';
 
-import withStyles from '@material-ui/core/styles/withStyles'
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = {
   // flexWrap: 'wrap', flexFlow: 'row wrap', justifyContent: 'space-around'
