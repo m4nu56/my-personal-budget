@@ -1,5 +1,5 @@
 import React from 'react';
-import {Edit, NumberInput, ReferenceInput, required, SelectInput, SimpleForm, TextInput} from 'react-admin';
+import {Edit, NumberInput, ReferenceInput, required, SelectInput, SimpleForm, TextInput, DateInput} from 'react-admin';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -10,13 +10,13 @@ const styles = {
   flexItem: { display: 'inline-flex', marginRight: '1rem', flex: '1 1 40%' }
 }
 
-export const MovementCard = withStyles(styles)(({ classes, ...props }) => (
-  <Edit title={<ItemTitle title='Collectivité' subItems='libelle' />} {...props}>
+export const MovementEdit = withStyles(styles)(({ classes, ...props }) => (
+  <Edit {...props}>
     <SimpleForm>
-      <NumberInput source='id' label='ID' />
+      <NumberInput source='id' disabled label='ID' />
       <TextInput source='year' validate={required()} />
       <TextInput source='month' validate={required()} />
-      <TextInput source='date' validate={required()} />
+      <DateInput source='date' validate={required()} />
       <TextInput source='amount' validate={required()} />
       <TextInput source='label' />
       <ReferenceInput label='Catégorie' source='category_id' reference='categories'>
@@ -25,9 +25,3 @@ export const MovementCard = withStyles(styles)(({ classes, ...props }) => (
     </SimpleForm>
   </Edit>
 ))
-
-export const ItemTitle = ({ record, title, subItems }) => {
-  subItems = Array.isArray(subItems) ? subItems : Array(subItems)
-  const itemsAsString = subItems.map(i => record[i]).join(' ')
-  return <span>{`${title}: ${itemsAsString}`}</span>
-}
