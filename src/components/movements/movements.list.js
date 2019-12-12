@@ -4,7 +4,7 @@ import {ListActions} from './movements.list.action';
 
 export const MovementList = props =>{
     return (
-    <List {...props} actions={<ListActions />}>
+    <List {...props} actions={<ListActions {...props} />}>
         <Datagrid rowClick="edit">
             <TextField source="id"/>
             <TextField source="year"/>
