@@ -1,10 +1,10 @@
 import React from 'react';
 import {Datagrid, DateField, List, NumberField, ReferenceField, TextField} from 'react-admin';
-import {ListActions} from './movements.list.action';
+import {MovementListActions} from './MovementListActions';
 
 export const MovementList = props =>{
     return (
-    <List {...props} actions={<ListActions {...props} />}>
+    <List {...props} actions={<MovementListActions {...props} />}>
         <Datagrid rowClick="edit">
             <TextField source="id"/>
             <TextField source="year"/>

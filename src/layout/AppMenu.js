@@ -1,6 +1,5 @@
 import React, { createElement } from 'react';
 import { useSelector } from 'react-redux';
-import { useMediaQuery } from '@material-ui/core';
 import { MenuItemLink, getResources } from 'react-admin';
 import { withRouter } from 'react-router-dom';
 import LabelIcon from '@material-ui/icons/Label';
@@ -14,7 +13,7 @@ const AppMenu = ({ onMenuClick }) => {
                 <MenuItemLink
                     key={resource.name}
                     to={`/${resource.name}`}
-                    primaryText={resource.options && resource.options.label || resource.name}
+                    primaryText={(resource.options && resource.options.label) || resource.name}
                     leftIcon={resource.icon && createElement(resource.icon)}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}

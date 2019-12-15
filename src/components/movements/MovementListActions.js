@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import {CreateButton, ExportButton} from 'react-admin';
 import Toolbar from '@material-ui/core/Toolbar';
 import BackupIcon from '@material-ui/icons/Backup';
@@ -12,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export const ListActions = ({basePath, currentSort, displayedFilters, exporter, filters, filterValues, onUnselectItems, resource, selectedIds, showFilter, total, history}) => {
+export const MovementListActions = ({basePath, currentSort, displayedFilters, exporter, filters, filterValues, onUnselectItems, resource, selectedIds, showFilter, total, history}) => {
     const classes = useStyles();
     return (
         <Toolbar>

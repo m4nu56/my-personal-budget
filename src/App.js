@@ -1,10 +1,8 @@
 import React from 'react';
 import {Admin, ListGuesser, Resource} from 'react-admin';
 import dataProvider from './providers/dataProvider';
-import {MovementEdit} from './components/movements/movement.edit';
-import {MovementCreate} from './components/movements/movement.create';
-import {CategoryCard} from './components/categories/category.card';
-import {MovementList} from './components/movements/movements.list';
+import {MovementEdit, MovementCreate, MovementList} from './components/movements';
+import {CategoryEdit} from './components/categories';
 import Dashboard from './pages/Dashboard';
 import watchAll from './sagas/api-saga';
 import rootReducer from './reducers';
@@ -17,8 +15,10 @@ const App = () => <Admin dataProvider={dataProvider}
                          customRoutes={customRoutes}
                          customSagas={[watchAll]}
                          customReducers={{ rootReducer }}>
+  
   <Resource name="movements" list={MovementList} edit={MovementEdit} create={MovementCreate} />
-  <Resource name="categories" list={ListGuesser} edit={CategoryCard}/>
+  <Resource name="categories" list={ListGuesser} edit={CategoryEdit}/>
+
 </Admin>
 
 export default App

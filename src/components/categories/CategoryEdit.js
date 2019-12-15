@@ -10,7 +10,7 @@ const styles = {
   flexItem: { display: 'inline-flex', marginRight: '1rem', flex: '1 1 40%' }
 }
 
-export const CategoryCard = withStyles(styles)(({ classes, ...props }) => (
+export const CategoryEdit = withStyles(styles)(({ classes, ...props }) => (
   <Edit title={<ItemTitle title='Collectivité' subItems='libelle' />} {...props}>
     <SimpleForm>
       <NumberInput source='id' label='ID' />
