@@ -9,6 +9,13 @@ const AppMenu = ({ onMenuClick }) => {
     const resources = useSelector(getResources);
     return (
         <div>
+            <MenuItemLink
+                to="/"
+                primaryText="Dashboard"
+                leftIcon={<LabelIcon />}
+                onClick={onMenuClick}
+                sidebarIsOpen={open}
+            />
             {resources.map(resource => (
                 <MenuItemLink
                     key={resource.name}
