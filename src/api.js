@@ -18,7 +18,7 @@ export const makeRequest = (url, method = 'GET', payload) => {
     );
 
     const request = new window.Request(urlApi, {
-        method: method ? method : 'GET',
+        method: method,
         headers: new Headers({
             Accept: 'application/json',
             'Content-Type': 'application/json'
