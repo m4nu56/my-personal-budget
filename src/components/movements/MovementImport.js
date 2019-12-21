@@ -1,30 +1,88 @@
 import React from 'react';
-import {SaveButton} from 'ra-ui-materialui'
-import {SimpleForm, TextInput} from 'react-admin';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import Card from '@material-ui/core/Card';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import {makeStyles} from '@material-ui/core';
 
-function MovementImportForm ({...props}) {
-    const {isSubmitting} = props;
-    return <SimpleForm save={props.save}
-                       toolbar={null}
-                       onSubmit={props.save}
-                       initialValues={props.initialValues}>
-        <TextInput multiline source="body" resettable fullWidth={true}/>
-        <SaveButton saving={isSubmitting} onClick={props.save}/>
-    </SimpleForm>;
-}
+const useStyles = makeStyles(theme => ({
+    button: {
+        margin: theme.spacing(2)
+    },
+    input: {
+        display: 'none'
+    }
+}));
+
+const ImportBankDataForm = () => {
+    const classes = useStyles();
+
+    return (
+        <Formik
+            initialValues={{bankData: ''}}
+            validationSchema={Yup.object({
+                bankData: Yup.string().required('Required')
+            })}
+            onSubmit={(values, {setSubmitting}) => {
+                setTimeout(() => {
+                    alert(JSON.stringify(values, null, 2));
+                    setSubmitting(false);
+                }, 400);
+            }}
+        >
+            {formik => (
+
+                <form onSubmit={formik.handleSubmit}>
+                    <TextField
+                        id="bankData"
+                        name="bankData"
+                        helperText={formik.touched.bankData ? formik.errors.bankData : ''}
+                        error={formik.touched.bankData && Boolean(formik.errors.bankData)}
+                        label="Paste bank data"
+                        value={formik.values.bankData}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        fullWidth
+                        multiline
+                        rows="5"
+                    />
+
+                    <Button type="submit" disabled={formik.isSubmitting} color={'primary'} variant={'contained'} className={classes.button}>
+                        Submit
+                    </Button>
+
+                    <div>
+                        <input
+                            accept="text/csv"
+                            className={classes.input}
+                            id="contained-button-file"
+                            multiple
+                            type="file"
+                        />
+                        <label htmlFor="contained-button-file">
+                            <Button variant="contained" color="primary" component="span">
+                                Upload
+                            </Button>
+                        </label>
+                    </div>
+                </form>
+            )}
+        </Formik>
+    );
+};
 
 const MovementImport = props => {
 
-    const importRecord = {
-        body: 'ABCD1234'
-    };
-
     return (
-        <div>
-            <h1>Imports</h1>
-            <pre>{importRecord.body}</pre>
-            <MovementImportForm save={(submit) => alert('form saved', submit)} initialValues={importRecord}/>
-        </div>
+        <Card>
+            <CardHeader title='Import bank data'/>
+            <CardContent>
+                <ImportBankDataForm/>
+            </CardContent>
+        </Card>
     );
 };
 
