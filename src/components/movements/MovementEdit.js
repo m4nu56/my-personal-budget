@@ -19,7 +19,7 @@ export const MovementEdit = withStyles(styles)(({ classes, ...props }) => (
       <DateInput source='date' validate={required()} />
       <TextInput source='amount' validate={required()} />
       <TextInput source='label' />
-      <ReferenceInput label='Catégorie' source='category_id' reference='categories'>
+      <ReferenceInput label='Catégorie' source='categoryId' reference='categories'>
         <SelectInput optionText='name' />
       </ReferenceInput>
     </SimpleForm>

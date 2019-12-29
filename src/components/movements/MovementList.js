@@ -12,8 +12,8 @@ export const MovementList = props =>{
             <DateField source="date"/>
             <NumberField source="amount"/>
             <TextField source="label"/>
-            <ReferenceField source="category_id" reference="categories"><TextField source="name"/></ReferenceField>
-            <NumberField source="category.id"/>
+            <ReferenceField source="categoryId" reference="categories"><TextField source="name"/></ReferenceField>
+            <NumberField source="categoryId"/>
         </Datagrid>
     </List>
 )};
