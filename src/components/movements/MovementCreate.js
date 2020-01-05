@@ -16,7 +16,7 @@ export const MovementCreate = withStyles(styles)(({ classes, ...props }) => (
       <DateInput source='date' validate={required()} defaultValue={new Date()} />
       <TextInput source='amount' validate={required()} />
       <TextInput source='label' />
-      <ReferenceInput label='Catégorie' source='category_id' reference='categories'>
+      <ReferenceInput label='Catégorie' source='id_category' reference='categories'>
         <SelectInput optionText='name' />
       </ReferenceInput>
     </SimpleForm>
