@@ -1,24 +1,26 @@
 import React from 'react';
-import {Admin, Resource} from 'react-admin';
-import dataProvider from './providers/dataProvider';
-import {MovementEdit, MovementCreate, MovementList} from './components/movements';
-import {CategoryEdit, CategoryList, CategoryCreate} from './components/categories';
-import Dashboard from './pages/Dashboard';
-import watchAll from './sagas/api-saga';
-import rootReducer from './reducers';
-import AppLayout from './layout/AppLayout';
-import customRoutes from './customRoutes';
+import logo from './logo.svg';
+import './App.css';
 
-const App = () => <Admin dataProvider={dataProvider}
-                         dashboard={Dashboard}
-                         layout={AppLayout}
-                         customRoutes={customRoutes}
-                         customSagas={[watchAll]}
-                         customReducers={{ rootReducer }}>
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
 
-  <Resource name="movements" list={MovementList} edit={MovementEdit} create={MovementCreate} />
-  <Resource name="categories" list={CategoryList} edit={CategoryEdit} create={CategoryCreate} />
-
-</Admin>
-
-export default App
+export default App;

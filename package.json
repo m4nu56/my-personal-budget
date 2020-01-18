@@ -1,23 +1,15 @@
 {
-  "name": "budget",
+  "name": "front",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "dependencies": {
-    "@material-ui/core": "latest",
-    "@material-ui/icons": "latest",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "dotenv": "latest",
-    "formik": "^2.0.8",
-    "prop-types": "^15.7.2",
-    "ra-data-json-server": "^3.0.3",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^7.2.1",
     "react": "^16.12.0",
-    "react-admin": "^3.0.3",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0",
-    "serve": "^11.3.0",
-    "yup": "^0.28.0"
+    "serve": "^11.3.0"
   },
   "scripts": {
     "dev": "react-scripts start",
@@ -41,9 +33,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "engines": {
-    "node": "10.17.0",
-    "npm": "6.11.3"
   }
 }
