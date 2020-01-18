@@ -7,6 +7,8 @@ import * as Yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core';
+import {useDispatch} from 'react-redux';
+import {IMPORT_BANK_DATA} from '../../constants/actions';
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -19,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 const ImportBankDataForm = () => {
     const classes = useStyles();
-
+    const dispatch = useDispatch();
     return (
         <Formik
             initialValues={{bankData: ''}}
@@ -27,6 +29,7 @@ const ImportBankDataForm = () => {
                 bankData: Yup.string().required('Required')
             })}
             onSubmit={(values, {setSubmitting}) => {
+                dispatch({ type: IMPORT_BANK_DATA, payload: values.bankData })
                 setTimeout(() => {
                     alert(JSON.stringify(values, null, 2));
                     setSubmitting(false);

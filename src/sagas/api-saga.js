@@ -1,6 +1,6 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 import { SHOW_NOTIFICATION } from 'react-admin'
-import {CATEGORIES, CATEGORIES_DATA, DASHBOARD, DASHBOARD_DATA} from '../constants/actions';
+import {CATEGORIES, CATEGORIES_DATA, DASHBOARD, DASHBOARD_DATA, IMPORT_BANK_DATA, IMPORTED_BANK_DATA} from '../constants/actions';
 import { makeRequest } from '../api'
 
 /**
@@ -11,12 +11,13 @@ import { makeRequest } from '../api'
 export default function * watchAll () {
   yield all([
     takeEvery(DASHBOARD, dashboardSaga),
-    takeEvery(CATEGORIES, categoriesSaga)
+    takeEvery(CATEGORIES, categoriesSaga),
+    takeEvery(IMPORT_BANK_DATA, importBankData),
   ])
 }
 
 /**
- * Appel API pour récupérer les datas du dashboard
+ * API call to get dashboard summary
  */
 function * dashboardSaga () {
   try {
@@ -29,7 +30,20 @@ function * dashboardSaga () {
 }
 
 /**
- * Appel API pour récupérer les datas du dashboard
+ * API call to send form data to the server to create the movements
+ */
+function * importBankData (formData) {
+  try {
+    const payload = yield call(makeRequest, 'movements/import', 'POST', formData.payload)
+    yield put({ type: IMPORTED_BANK_DATA, payload: payload })
+  } catch (e) {
+    // en cas d'erreur on affiche un message
+    yield put({ type: SHOW_NOTIFICATION, payload: { message: `Erreur lors de la récupération des catégories: ${e.message}`, type: 'error' } })
+  }
+}
+
+/**
+ * API call to get all categories
  */
 function * categoriesSaga () {
   try {
