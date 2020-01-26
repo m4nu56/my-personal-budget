@@ -9,22 +9,57 @@ dotenv.config();
  * @param payload
  * @returns {Promise<T | never>}
  */
-export const makeRequest = (url, method = 'GET', payload) => {
+export const makeRequest = (url, method = 'GET', payload, file) => {
     let urlApi = `${process.env.REACT_APP_API_URL}/${url}`;
     console.log(
         `urlApi call=${urlApi} with method=${method}` +
-            (payload ? ` and payload=` : ''),
-        payload ? payload : ''
+        (payload ? ` and payload=` : ''),
+        payload ? payload : '',
+        file ? file : '',
     );
+
+    let formData;
+    if (file) {
+        formData = new FormData();
+        formData.append('file',file,file.name);
+    }
 
     const request = new window.Request(urlApi, {
         method: method,
         headers: new Headers({
             Accept: 'application/json',
-            'Content-Type': 'application/json'
+            // 'Content-Type': formData ? '' : 'application/json'
             // 'Authorization': 'Bearer ' + window.localStorage.getItem(process.env.REACT_APP_SELDON_API_TOKEN_KEY)
         }),
-        body: payload ? JSON.stringify(payload) : null
+        body: payload ? JSON.stringify(payload) : formData != null ? formData : null
+    });
+
+    // @formatter:off
+    return fetch(request)
+        .then(response => checkStatus(response))
+        .catch(error => Promise.reject(error));
+    // @formatter:on
+};
+
+export const uploadFile = (url, file) => {
+    let urlApi = `${process.env.REACT_APP_API_URL}/${url}`;
+    console.log(
+        `upload file call=${urlApi}` +
+        file ? file : '',
+    );
+
+    let formData;
+    if (file) {
+        formData = new FormData();
+        formData.append('file',file,file.name);
+    }
+
+    const request = new window.Request(urlApi, {
+        method: 'POST',
+        headers: new Headers({
+            Accept: 'application/json',
+        }),
+        body: formData != null ? formData : null
     });
 
     // @formatter:off

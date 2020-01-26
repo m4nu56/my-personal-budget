@@ -1,7 +1,8 @@
-import {CATEGORIES_DATA, DASHBOARD_DATA} from '../constants/actions';
+import {CATEGORIES_DATA, DASHBOARD_DATA, IMPORTED_BANK_DATA} from '../constants/actions';
 
 const initialState = {
-  dashboardData: []
+  dashboardData: [],
+  importedBankData: []
 }
 
 // Redux reducer added to the react-admin project.
@@ -17,6 +18,11 @@ function rootReducer (previousState = initialState, action) {
   if (action.type === CATEGORIES_DATA) {
     return Object.assign({}, previousState, {
       categories: action.payload.data
+    })
+  }
+  if (action.type === IMPORTED_BANK_DATA) {
+    return Object.assign({}, previousState, {
+      importedBankData: action.payload
     })
   }
   if (action.type === 'increment-counter') {

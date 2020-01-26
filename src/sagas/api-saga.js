@@ -1,7 +1,7 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 import { SHOW_NOTIFICATION } from 'react-admin'
 import {CATEGORIES, CATEGORIES_DATA, DASHBOARD, DASHBOARD_DATA, IMPORT_BANK_DATA, IMPORTED_BANK_DATA} from '../constants/actions';
-import { makeRequest } from '../api'
+import {makeRequest, uploadFile} from '../api';
 
 /**
  * Le default export du js qui permet de lancer la surveillance de toutes les actions liées aux appels API
@@ -34,7 +34,7 @@ function * dashboardSaga () {
  */
 function * importBankData (formData) {
   try {
-    const payload = yield call(makeRequest, 'movements/import', 'POST', formData.payload)
+    const payload = yield call(uploadFile, 'imports', formData.payload)
     yield put({ type: IMPORTED_BANK_DATA, payload: payload })
   } catch (e) {
     // en cas d'erreur on affiche un message
